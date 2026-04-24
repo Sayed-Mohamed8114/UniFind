@@ -6,3 +6,4 @@
 
 /* JS sources */
 @source "flyonui/dist/index.js";
+@source "node_modules/flyonui/dist/accordion.js"; 
