@@ -1,9 +1,7 @@
 @import "tailwindcss";
 @plugin "flyonui";
+@import "/node_modules/flyonui/variants.css"; /* Require only if you want to use FlyonUI JS component */
 
-/* FlyonUI */
-@import "flyonui/variants.css";
+@source "./node_modules/flyonui/dist/index.js"; /* Require only if you want to use FlyonUI JS component */
 
-/* JS sources */
-@source "flyonui/dist/index.js";
-@source "node_modules/flyonui/dist/accordion.js"; 
+@source "./node_modules/flyonui/dist/accordion.js"; 
