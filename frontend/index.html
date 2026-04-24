@@ -1,0 +1,1015 @@
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./src/css/output.css" />
+    <!--remixicon-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
+      integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <!--aos library-->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <title>Uni-Find</title>
+  </head>
+  <body class="bg-linear-to-r from-sky-50 via-sky-100 to-sky-200 w-full h-auto overflow-x-hidden">
+    <!--navBar-->
+    <nav
+      class="flex items-center  h-auto p-3 md:p-5 justify-evenly w-[70%] mx-auto rounded-4xl sticky top-0 z-100 bg-white/20 backdrop-blur-md border-b border-white/30 shadow-sm"
+    >
+      <div class="navbar-start md:hidden">
+        <div
+          class="dropdown relative inline-flex [--auto-close:inside] [--offset:9]"
+        >
+          <button
+            id="dropdown-name"
+            type="button"
+            class="dropdown-open:bg-base-content/10 dropdown-open:text-base-content"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-label="Dropdown"
+          >
+            <span
+              class="icon-[tabler--menu-2] item-center bg-transparent size-5"
+              ><i
+                class="ri-menu-line items-center font-extrabold text-3xl text-sky-800"
+              ></i
+            ></span>
+          </button>
+          <ul
+            class="dropdown-menu dropdown-open:opacity-100 hidden bg-transparent"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="dropdown-name"
+          >
+            <li><a class="dropdown-item" href="#">Home</a></li>
+            <li><a class="dropdown-item" href="#">Lost Page</a></li>
+            <li><a class="dropdown-item" href="#">Contact team</a></li>
+            <hr class="border-base-content/25 -mx-2" />
+            <li><a class="dropdown-item" href="#">Sign-In</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="navbar-center flex items-center">
+        <a
+          class="link text-sky-900 link-neutral text-xl font-bold no-underline"
+          href="#"
+        >
+          Uni-Find
+        </a>
+      </div>
+      <div class="md:flex items-center justify-evenly gap-20 hidden">
+        <ul class="flex flex-row gap-5 items-center">
+          <li><a href="#landing" class="text-sky-700 font-bold">Home</a></li>
+          <li><a href="#FAQs" class="text-sky-700 font-bold">FAQs</a></li>
+          <li><a href="#contact-us" class="text-sky-700 font-bold">Contact team</a></li>
+          <li><a href="#gallery" class="text-sky-700 font-bold">returned</a></li>
+        </ul>
+        <button type="submit" class="btn btn-gradient btn-accent" onclick="window.open('./pages/signIn.html','_blank')">
+          Sign-In
+        </button>
+      </div>
+    </nav>
+
+    <!--main content-->
+    <main
+      class="w-full h-auto flex flex-col items-center justify-center mt-5 mb-15"
+    >
+      <!--Landing-->
+      <section
+        id="landing"
+        class="w-full p-5 items-center flex gap-5 justify-between h-[90vh] bg-transparent scroll-mt-24"
+      >
+        <div
+          class="w-[45%] h-auto items-center gap-6 flex p-10 flex-col justify-center"
+        >
+          <h1
+            class="text-lg md:text-4xl font-bold items-center bg-linear-to-b from-sky-950 via-sky-600 to-sky-400 bg-clip-text text-transparent"
+            data-aos="fade-down"
+            data-aos-easing="linear"
+            data-aos-duration="2000"
+          >
+            Welcome to Uni-Find
+          </h1>
+          <div
+            class="w-full items-center h-auto flex p-2 flex-col justify-center gap-5"
+            data-aos="fade-down"
+            data-aos-easing="linear"
+            data-aos-duration="1500"
+          >
+            <p
+              class="text-center text-sm md:text-lg text-sky-800 font-light rounded-lg"
+            >
+              We created this platform to help students easily find and report
+              lost items within the university and surrounding college areas.
+              Our goal is to connect people who lose things with those who find
+              them in a simple, fast, and reliable way. Instead of searching
+              blindly or relying on chance, this website makes the process
+              organized and accessible for everyone in the university community,
+              making it easier to return lost belongings to their owners.
+            </p>
+            <img
+              src="./src/assets/uni.jpg"
+              alt="uni"
+              class="w-full h-[50vh] rounded-4xl"
+            />
+          </div>
+        </div>
+        <div
+          class="w-[45%] h-full"
+          data-aos="fade-left"
+          data-aos-easing="linear"
+            data-aos-duration="1500"
+        >
+          <img src="./src/assets/hero.png" alt="hero logo" />
+          <div class="w-full flex justify-center gap-2">
+            <p
+              class="w-[35%] bg-linear-to-r from-sky-50 via-sky-100 to-sky-200 p-3 text-center rounded-lg text-sky-800"
+            >
+              First time <i class="ri-arrow-right-fill text-sky-950"></i>
+            </p>
+            <button class="btn btn-gradient btn-accent w-[35%] p-6 text-center " onclick="window.open('./pages/regiester.html','_blank')">
+              Create an account ??
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!--Gallery-->
+      <section class="w-full p-5 bg-transparent mt-10 scroll-mt-24" id="gallery">
+        <h6 class="text-sky-800 font-bold text-center text-3xl">
+          Item we successed to find its Owner
+        </h6>
+        <div
+          class="grid w-full items-center gap-x-5 p-10 h-auto grid-cols-1 md:grid-cols-2"
+        >
+          <div
+            id="horizontal-thumbnails"
+            data-carousel='{ "loadingClasses": "opacity-0" }'
+            class="relative w-full bg-transparent"
+            data-aos="zoom-in-left"
+            data-aos-duration="500"
+          >
+            <div class="carousel bg-transparent">
+              <div class="carousel-body h-3/4 opacity-0 bg-transparent">
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                  <div class="flex size-full justify-center">
+                    <img
+                      src="./src/assets/books.jpg"
+                      class="size-full object-cover"
+                      alt="books"
+                    />
+                  </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                  <div class="flex size-full justify-center">
+                    <img
+                      src="./src/assets/headphones.jpg"
+                      class="size-full object-cover"
+                      alt="headphones"
+                    />
+                  </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                  <div class="flex size-full justify-center">
+                    <img
+                      src="./src/assets/tablet1.jpeg"
+                      class="size-full object-cover"
+                      alt="tablet1"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="carousel-pagination absolute bottom-0 inset-e-0 inset-s-0 z-1 h-1/4 bg-sky-50 flex justify-center overflow-x-auto pt-2"
+              >
+                <img
+                  src="./src/assets/books.jpg"
+                  class="carousel-pagination-item carousel-active:opacity-100 grow cursor-pointer object-cover opacity-30"
+                  alt="books"
+                />
+                <img
+                  src="./src/assets/headphones.jpg"
+                  class="carousel-pagination-item carousel-active:opacity-100 grow cursor-pointer object-cover opacity-30"
+                  alt="headphones"
+                />
+                <img
+                  src="./src/assets/tablet1.jpeg"
+                  class="carousel-pagination-item carousel-active:opacity-100 grow cursor-pointer object-cover opacity-30"
+                  alt="tablet1"
+                />
+              </div>
+              <!-- Previous Slide -->
+              <button
+                type="button"
+                class="carousel-prev inset-s-5 max-sm:inset-s-3 carousel-disabled:opacity-50 size-9.5 bg-sky-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm"
+              >
+                <span
+                  class="icon-[tabler--chevron-left] size-5 text-center items-center cursor-pointer"
+                  ><i
+                    class="ri-arrow-left-fill text-lg text-center text-sky-800"
+                  ></i
+                ></span>
+                <span class="sr-only text-sky-800">Previous</span>
+              </button>
+              <!-- Next Slide -->
+              <button
+                type="button"
+                class="carousel-next inset-e-5 max-sm:inset-e-3 carousel-disabled:opacity-50 size-9.5 bg-sky-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm"
+              >
+                <span class="icon-[tabler--chevron-right] text-sky-800 size-5">
+                  <i
+                    class="ri-arrow-right-fill text-lg text-center text-sky-800"
+                  ></i
+                ></span>
+                <span class="sr-only">Next</span>
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="horizontal-thumbnails"
+            data-carousel='{ "loadingClasses": "opacity-0" }'
+            class="relative w-full bg-transparent"
+            data-aos="zoom-in-right"
+            data-aos-duration="600"
+          >
+            <div class="carousel bg-transparent">
+              <div class="carousel-body h-3/4 opacity-0 bg-transparent">
+                <!-- Slide 1 -->
+                <div class="carousel-slide">
+                  <div class="flex size-full justify-center">
+                    <img
+                      src="./src/assets/labtop1.jpg"
+                      class="size-full object-cover"
+                      alt="labtop1"
+                    />
+                  </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="carousel-slide">
+                  <div class="flex size-full justify-center">
+                    <img
+                      src="./src/assets/tablet2.jpeg"
+                      class="size-full object-cover"
+                      alt="tablet2"
+                    />
+                  </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="carousel-slide">
+                  <div class="flex size-full justify-center">
+                    <img
+                      src="./src/assets/books2.jpg"
+                      class="size-full object-cover"
+                      alt="books2"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="carousel-pagination bg-sky-50 absolute bottom-0 inset-e-0 inset-s-0 z-1 h-1/4 flex justify-center overflow-x-auto pt-2"
+              >
+                <img
+                  src="./src/assets/labtop1.jpg"
+                  class="carousel-pagination-item carousel-active:opacity-100 cursor-pointer grow object-cover opacity-30"
+                  alt="laptop1"
+                />
+                <img
+                  src="./src/assets/tablet2.jpeg"
+                  class="carousel-pagination-item carousel-active:opacity-100 cursor-pointer grow object-cover opacity-30"
+                  alt="tablet2"
+                />
+                <img
+                  src="./src/assets/books2.jpg"
+                  class="carousel-pagination-item carousel-active:opacity-100 cursor-pointer grow object-cover opacity-30"
+                  alt="books2"
+                />
+              </div>
+              <!-- Previous Slide -->
+              <button
+                type="button"
+                class="carousel-prev inset-s-5 max-sm:inset-s-3 carousel-disabled:opacity-50 size-9.5 bg-sky-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm"
+              >
+                <span
+                  class="icon-[tabler--chevron-left] size-5 text-center items-center cursor-pointer"
+                  ><i
+                    class="ri-arrow-left-fill text-lg text-center text-sky-800"
+                  ></i
+                ></span>
+                <span class="sr-only text-sky-800">Previous</span>
+              </button>
+              <!-- Next Slide -->
+              <button
+                type="button"
+                class="carousel-next inset-e-5 max-sm:inset-e-3 carousel-disabled:opacity-50 size-9.5 bg-sky-100 flex items-center justify-center rounded-full shadow-base-300/20 shadow-sm"
+              >
+                <span class="icon-[tabler--chevron-right] text-sky-800 size-5">
+                  <i
+                    class="ri-arrow-right-fill text-lg text-center text-sky-800"
+                  ></i
+                ></span>
+                <span class="sr-only">Next</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--team section-->
+      <section id="Team" class="w-full my-10 p-5 bg-transparent scroll-mt-24"
+      data-aos="zoom-in"
+      data-aos-duration="700"
+      >
+        <h6
+          class="text-3xl text-center text-sky-800 font-bold font-serif leading-1.5 my-5"
+        >
+          Our Team
+        </h6>
+        <div
+          id="draggable"
+          data-carousel='{ "loadingClasses": "opacity-0","dotsItemClasses": "carousel-dot carousel-active:bg-primary", "slidesQty": { "xs": 1, "lg": 3 }, "isDraggable": true }'
+          class="relative w-full"
+        >
+          <div class="carousel h-80 rounded-lg">
+            <div
+              class="carousel-body h-full gap-4 carousel-dragging:transition-none carousel-dragging:cursor-grabbing cursor-grab opacity-0"
+            >
+              <!-- Slide 1 -->
+              <div class="carousel-slide">
+                <div
+                  class="bg-linear-to-br from-sky-50 via-sky-100 shadow-md shadow-sky-500 to-sky-200 flex justify-center h-full p-5 flex-col"
+                >
+                  <span
+                    class="self-center text-lg font-bold text-sky-950 font-mono"
+                    >sayed Moahmed</span
+                  >
+                  <span class="self-center text-sm font-semibold text-sky-800"
+                    >Frontend Developer</span
+                  >
+                  <div class="flex gap-3 justify-center">
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-facebook-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-github-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-instagram-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-whatsapp-fill"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide 2 -->
+              <div class="carousel-slide">
+                <div
+                  class="bg-linear-to-br from-sky-50 via-sky-100 to-sky-200 flex shadow-md shadow-sky-500 justify-center h-full p-5 flex-col"
+                >
+                  <span
+                    class="self-center text-lg font-bold text-sky-950 font-mono"
+                    >Abdelrahman Moahmed</span
+                  >
+                  <span class="self-center text-sm font-semibold text-sky-800"
+                    >Backend Developer</span
+                  >
+                  <div class="flex gap-3 justify-center">
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-facebook-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-github-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-instagram-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-whatsapp-fill"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide 3 -->
+              <div class="carousel-slide">
+                <div
+                  class="bg-linear-to-br from-sky-50 via-sky-100 to-sky-200 flex shadow-md shadow-sky-500 justify-center h-full p-5 flex-col"
+                >
+                  <span
+                    class="self-center text-lg font-bold text-sky-950 font-mono"
+                    >Abdelrahman Mahmoud</span
+                  >
+                  <span class="self-center text-sm font-semibold text-sky-800"
+                    >frontend Developer</span
+                  >
+                  <div class="flex gap-3 justify-center">
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-facebook-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-github-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-instagram-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-whatsapp-fill"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide 4 -->
+              <div class="carousel-slide">
+                <div
+                  class="bg-linear-to-br from-sky-50 via-sky-100 to-sky-200 flex shadow-md shadow-sky-500 justify-center h-full p-5 flex-col"
+                >
+                  <span
+                    class="self-center text-lg font-bold text-sky-950 font-mono"
+                    >Abdelrahman Saber
+                  </span>
+                  <span class="self-center text-sm font-semibold text-sky-800"
+                    >Backend Developer</span
+                  >
+                  <div class="flex gap-3 justify-center">
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-facebook-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-github-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-instagram-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-whatsapp-fill"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide 5 -->
+              <div class="carousel-slide">
+                <div
+                  class="bg-linear-to-br from-sky-50 via-sky-100 to-sky-200 flex shadow-md shadow-sky-500 justify-center h-full p-5 flex-col"
+                >
+                  <span
+                    class="self-center text-lg font-bold text-sky-950 font-mono"
+                    >Abdelrahman ghandour</span
+                  >
+                  <span class="self-center text-sm font-semibold text-sky-800"
+                    >Software engineer</span
+                  >
+                  <div class="flex gap-3 justify-center">
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-facebook-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-github-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-instagram-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-whatsapp-fill"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+              <!-- Slide 6 -->
+              <div class="carousel-slide">
+                <div
+                  class="bg-linear-to-br from-sky-50 via-sky-100 to-sky-200 flex shadow-md shadow-sky-500 justify-center h-full p-5 flex-col"
+                >
+                  <span
+                    class="self-center text-lg font-bold text-sky-950 font-mono"
+                    >Tarek Ahmed</span
+                  >
+                  <span class="self-center text-sm font-semibold text-sky-800"
+                    >Mobile Developer</span
+                  >
+                  <div class="flex gap-3 justify-center">
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-facebook-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-github-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-instagram-fill"></i
+                    ></a>
+                    <a
+                      class="text-sky-800 font-medium text-lg p-2 cursor-pointer z-50"
+                      ><i class="ri-whatsapp-fill"></i
+                    ></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="carousel-pagination absolute bottom-3 inset-e-0 inset-s-0 flex justify-center gap-3"
+          ></div>
+        </div>
+      </section>
+
+      <!--Faqs section-->
+      <section
+        id="FAQs"
+        class="w-[95%] bg-linear-to-b from-sky-50 via-sky-100 to-sky-100 p-5 rounded-4xl shadow-md shadow-sky-800 scroll-mt-30"
+        data-aos="zoom-in"
+        data-aos-duration="1500"
+      >
+        <h6 class="text-sky-800 text-3xl text-center font-extrabold mb-5">
+          FAQs
+        </h6>
+        <div class="accordion divide-neutral/20 divide-y">
+          <div class="accordion-item active" id="payment-nested">
+            <button
+              class="accordion-toggle text-sky-800 font-extrabold inline-flex items-center gap-x-4 text-start"
+              aria-controls="payment-nested-collapse"
+              aria-expanded="true"
+            >
+              <span
+                class="icon-[tabler--plus] accordion-item-active:hidden text-base-content size-4.5 block shrink-0"
+              ></span>
+              <span
+                class="icon-[tabler--minus] accordion-item-active:block text-base-content size-4.5 hidden shrink-0"
+              ></span>
+              How to use ??
+            </button>
+            <div
+              id="payment-nested-collapse"
+              class="accordion-content w-full overflow-hidden transition-[height] duration-300"
+              aria-labelledby="payment-nested"
+              role="region"
+            >
+              <div class="accordion divide-neutral/20 divide-y ps-6">
+                <div class="accordion-item active" id="payment-sub-one">
+                  <button
+                    class="accordion-toggle text-sky-800 font-medium inline-flex items-center gap-x-4 text-start"
+                    aria-controls="payment-sub-collapse-one"
+                    aria-expanded="true"
+                  >
+                    <span
+                      class="icon-[tabler--plus] accordion-item-active:hidden text-base-content size-4.5 block shrink-0"
+                    ></span>
+                    <span
+                      class="icon-[tabler--minus] accordion-item-active:block text-base-content size-4.5 hidden shrink-0"
+                    ></span>
+                    how can i post if i find something or search sfor something
+                    i lost??
+                  </button>
+                  <div
+                    id="payment-sub-collapse-one"
+                    class="accordion-content w-full overflow-hidden transition-[height] duration-300"
+                    aria-labelledby="payment-sub-one"
+                    role="region"
+                  >
+                    <div class="px-5 pb-4">
+                      <p class="text-gray-500 text-sm font-medium ml-10">
+                        you will need to make an account and the enter your
+                        academic id and then you will be able to search if you
+                        find something or if you lost something you also can
+                        make an account and then search it ad get the number of
+                        who found it and thn call it .
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item" id="payment-sub-two">
+                  <button
+                    class="accordion-toggle text-sky-800 font-medium inline-flex items-center gap-x-4 text-start"
+                    aria-controls="payment-sub-collapse-two"
+                    aria-expanded="false"
+                  >
+                    <span
+                      class="icon-[tabler--plus] accordion-item-active:hidden text-base-content size-4.5 block shrink-0"
+                    ></span>
+                    <span
+                      class="icon-[tabler--minus] accordion-item-active:block text-base-content size-4.5 hidden shrink-0"
+                    ></span>
+                    Do i need any subscription to search or make an account in
+                    this website ??
+                  </button>
+                  <div
+                    id="payment-sub-collapse-two"
+                    class="accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+                    aria-labelledby="payment-sub-two"
+                    role="region"
+                  >
+                    <div class="px-5 pb-4">
+                      <p class="text-gray-500 text-sm font-medium ml-10">
+                        No, This is not subscription based item. it's a free
+                        website just to help each other and not for profit
+                        porpose..
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" id="delivery-nested">
+            <button
+              class="accordion-toggle text-sky-800 font-extrabold inline-flex items-center gap-x-4 text-start"
+              aria-controls="delivery-nested-collapse"
+              aria-expanded="false"
+            >
+              <span
+                class="icon-[tabler--plus] accordion-item-active:hidden text-base-content size-4.5 block shrink-0"
+              ></span>
+              <span
+                class="icon-[tabler--minus] accordion-item-active:block text-base-content size-4.5 hidden shrink-0"
+              ></span>
+              what if there is someone missleadinig me or ask for money to
+              return my thing?
+            </button>
+            <div
+              id="delivery-nested-collapse"
+              class="accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+              aria-labelledby="delivery-nested"
+              role="region"
+            >
+              <div class="px-5 pb-4">
+                <p class="text-gray-500 text-sm font-medium ml-10">
+                  you will make a report on this one and we will act for you and
+                  your item will retrun (don't worry.)..
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item" id="cancel-nested">
+            <button
+              class="accordion-toggle text-sky-800 font-extrabold inline-flex items-center gap-x-4 text-start"
+              aria-controls="cancel-nested-collapse"
+              aria-expanded="false"
+            >
+              <span
+                class="icon-[tabler--plus] accordion-item-active:hidden text-base-content size-4.5 block shrink-0"
+              ></span>
+              <span
+                class="icon-[tabler--minus] accordion-item-active:block text-base-content size-4.5 hidden shrink-0"
+              ></span>
+              How can i contact the owner who found my item?
+            </button>
+            <div
+              id="cancel-nested-collapse"
+              class="accordion-content hidden w-full overflow-hidden transition-[height] duration-300"
+              aria-labelledby="cancel-nested"
+              role="region"
+            >
+              <div class="px-5 pb-4">
+                <p class="text-gray-500 text-sm font-medium ml-10">
+                  you will find his/her number under the item in the search just
+                  call the owner if you don't fell you can cotntact one of the
+                  team and he will do this for you..
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!--Contact team via email-->
+      <section id="contact-us" class="scroll-mt-24 mt-10"
+      data-aos="zoom-out-down" data-aos-duration="2000"
+      >
+
+      <h6 class="text-sky-800 font-bold text-center text-3xl">
+          Contact Team
+        </h6>
+
+        <div
+          class="bg-transparent w-full mt-7 rounded-2xl shadow-sky-300 shadow-md"
+        >
+          <h5
+            class="bg-linear-to-r from-sky-200 via-sky-100 to-sky-50 text-sky-900 rounded-t-lg p-4 text-xl font-bold"
+          >
+            Send direct mail to us!
+          </h5>
+          <div class="w-full p-4">
+            <form class="needs-validation peer grid gap-y-4">
+              <!-- Account Details -->
+              <div class="w-full">
+                <h6 class="text-lg text-sky-700 font-semibold">
+                  1. Account Details
+                </h6>
+                <hr class="mb-4 mt-2" />
+              </div>
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                  <label
+                    class="label-text text-sky-700 font-semibold"
+                    for="firstName"
+                    >First Name
+                  </label>
+                  <input
+                    id="firstName"
+                    type="text"
+                    placeholder="John"
+                    class="input placeholder:text-sky-700 bg-transparent focus:border-sky-300 text-sky-700"
+                    required
+                  />
+                  <span class="error-message">Please enter your name.</span>
+                  <span class="success-message">Looks good!</span>
+                </div>
+                <div>
+                  <label
+                    class="label-text text-sky-700 font-semibold"
+                    for="lastName"
+                    >Last Name</label
+                  >
+                  <input
+                    id="lastName"
+                    type="text"
+                    placeholder="Doe"
+                    class="input placeholder:text-sky-700 bg-transparent focus:border-sky-300 text-sky-700"
+                    required
+                  />
+                  <span class="error-message"
+                    >Please enter your last name.</span
+                  >
+                  <span class="success-message">Looks good!</span>
+                </div>
+              </div>
+              <!-- Email and password -->
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                  <label
+                    class="label-text text-sky-700 font-semibold"
+                    for="userEmail"
+                    >Email</label
+                  >
+                  <input
+                    id="userEmail"
+                    type="email"
+                    class="input placeholder:text-sky-700 bg-transparent focus:border-sky-300 text-sky-700"
+                    placeholder="john@gmail.com"
+                    aria-label="john@gmail.com"
+                    required=""
+                  />
+                  <span class="error-message">Please enter a valid email</span>
+                  <span class="success-message">Looks good!</span>
+                </div>
+              </div>
+
+              <!-- Personal Info -->
+              <div class="w-full">
+                <h6 class="text-lg text-sky-800 font-semibold">
+                  2. Personal Info
+                </h6>
+                <hr class="mb-4 mt-2" />
+              </div>
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                  <label
+                    class="label-text text-sky-700 font-semibold"
+                    aria-required="true"
+                    for="jsPickr"
+                    >DOB</label
+                  >
+                  <input
+                    id="jsPickr"
+                    type="text"
+                    class="input text-sky-700 placeholder:text-sky-700 bg-transparent focus:border-sky-200 focus:bordr-0"
+                    placeholder="YYYY-MM-DD"
+                    id="jsPickr"
+                    required
+                  />
+                  <span class="error-message">Please select your DOB</span>
+                  <span class="success-message">Looks good!</span>
+                </div>
+                <div>
+                  <div class="label-text text-sky-700 font-semibold">
+                    Gender
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      id="male"
+                      name="radio-0"
+                      class="radio text-sky-600"
+                      required
+                    />
+                    <label
+                      class="label-text text-sky-800 font-medium"
+                      for="male"
+                      >Male</label
+                    >
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      id="female"
+                      name="radio-0"
+                      class="radio text-sky-600"
+                      required
+                    />
+                    <label
+                      class="label-text text-sky-800 font-medium"
+                      for="female"
+                      >Female</label
+                    >
+                  </div>
+                  <span class="error-message">Please select your Gender</span>
+                  <span class="success-message">Looks good!</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+                <div>
+                  <label
+                    class="label-text text-sky-700 font-semibold"
+                    for="userCountry"
+                    aria-required="true"
+                    >Pick your College</label
+                  >
+                  <select
+                    class="select bg-transparent focus:border-sky-200 focus:border-0 text-sky-700"
+                    id="userCountry"
+                    aria-label="Select Country"
+                    required
+                  >
+                    <option class="text-sky-800" value="">
+                      Select College
+                    </option>
+                    <option class="text-sky-800" value="Computer-science">
+                      Computers and informatios
+                    </option>
+                    <option class="text-sky-800" value="Arts">Art</option>
+                    <option class="text-sky-800" value="Medical">
+                      Mediacal
+                    </option>
+                  </select>
+                  <span class="error-message">Please select your country</span>
+                  <span class="success-message">Looks good!</span>
+                </div>
+              </div>
+
+              <div class="w-full">
+                <label
+                  class="label-text font-semibold text-sky-950"
+                  for="userBio"
+                  >What in your mind??</label
+                >
+                <textarea
+                  class="bg-transparent placeholder:text-sky-800 text-sky-700 p-2 w-full min-h-20 resize-none"
+                  id="userBio"
+                  placeholder="Type here: "
+                  required=""
+                ></textarea>
+                <span class="error-message">Please write few words</span>
+                <span class="success-message">Looks good!</span>
+              </div>
+
+              <div class="mt-4">
+                <button
+                  type="submit"
+                  name="submitButton"
+                  class="btn btn-gradient btn-accent"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!--Footer-->
+    <footer class="footer bg-transparent p-10">
+      <form class="gap-6">
+        <div
+          class="flex items-center gap-5 text-xl font-bold text-base-content"
+        >
+          <img src="./src/assets/logo.png" class="w-20 h-20" alt="" />
+          <div class="flex flex-col items-center justify-evenly h-full gap-5">
+            <span class="font-bold text-sky-700 text-3xl">Uni-Find</span>
+            <p class="text-gray-500/75 text-center text-sm">
+              Lost something?? <br />
+              Don't Panic, It rest here.
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-transparent text-sky-800 border outline-0 mt-2 rounded-lg border-sky-600 p-2 removing:translate-x-5 removing:opacity-0 flex items-center gap-4 transition duration-300 ease-in-out"
+          role="alert"
+          id="dismiss-alert1"
+        >
+          Any misuse or misleading activity within our community will result in
+          a permanent ban.
+          <button
+            class="ms-auto cursor-pointer leading-none"
+            data-remove-element="#dismiss-alert1"
+            aria-label="Close Button"
+          >
+            <span class="icon-[tabler--x] size-6 text-center font-bold"
+              ><i class="ri-close-large-line"></i
+            ></span>
+          </button>
+        </div>
+      </form>
+
+      <nav class="text-base-content">
+        <h6 class="footer-title text-sky-700 font-semibold">Services</h6>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Find what you lost.</a
+        >
+        <span>
+          <a
+            href="#"
+            class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+            >Contact who found it directly</a
+          >
+          <span class="btn btn-gradient btn-accent text-sm ms-2">New</span>
+        </span>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Leave your number to make the owner contact you</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Make Advertisement about what you finded</a
+        >
+      </nav>
+      <nav class="text-base-content">
+        <h6 class="footer-title text-sky-700 font-semibold">Community</h6>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >About us</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Contact</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Jobs</a
+        >
+      </nav>
+      <nav class="text-base-content">
+        <h6 class="footer-title text-sky-700 font-semibold">Legal</h6>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Terms of use</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Privacy policy</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Cookie policy</a
+        >
+      </nav>
+    </footer>
+    <script src="/node_modules/flyonui/flyonui.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="/src/js/script.js"></script>
+    <script>
+      AOS.init();
+    </script>
+  </body>
+</html>
