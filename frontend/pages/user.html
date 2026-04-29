@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../src/css/output.css" />
+    <link rel="stylesheet" href="/src/css/user.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css"
+      integrity="sha512-kJlvECunwXftkPwyvHbclArO8wszgBGisiLeuDFwNM8ws+wKIw0sv1os3ClWZOcrEB2eRXULYUsm8OVRGJKwGA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+    <title>Sign-In</title>
+  </head>
+  <body
+    class="flex bg-linear-to-r from-sky-50 via-sky-100 to-sky-200 flex-col gap-5 items-center justify-center w-full h-auto"
+  >
+    <header
+      class="h-[10vh] w-[70%] flex items-center justify-between p-5 rounded-4xl bg-white/20 backdrop-blur-md border-b border-white/30 shadow-sm mt-3"
+    >
+      <h1
+        class="text-lg md:text-2xl font-bold text-center justify-center bg-linear-to-r from-sky-950 via-sky-600 to-sky-400 bg-clip-text text-transparent"
+      >
+        Welcome back, Search for items you think you will find here!
+      </h1>
+      <div class="flex items-center justify-center gap-3">
+        <input
+          type="text"
+          placeholder="Search..."
+          class="border border-sky-200 text-sky-900 placeholder:text-sky-800 focus:border-sky-900 outline-0 px-4 py-2 rounded-2xl w-full"
+        />
+
+        <button class="btn btn-gradient btn-accent px-4 py-2 rounded-lg">
+          <i class="ri-search-line"></i>Search
+        </button>
+        <button id="slidebar-btn" class="text-sky-100 text-lg btn btn-gradient btn-info gap-1 flex text-center"><i class="ri-door-closed-line"></i>Make a post</button>
+      </div>
+    </header>
+
+    <main class="flex h-screen w-full px-1.5 gap-2">
+      <!-- Sidebar column -->
+      <div
+        class="w-64 flex-shrink-0 fixed -translate-x-full duration-700 transition-transform  ease-in-out top-0 sidebar10"
+        id="slideBar"
+      >
+        <aside
+          id="logo-sidebar"
+          class="overlay rounded-2xl h-[80%] mt-4 bg-sky-100/90 backdrop-blur-md border-b border-sky-100/90 shadow-md shadow-sky-900 items-start justify-between [--auto-close:sm] sm:shadow-none overlay-open:translate-x-0 drawer drawer-start hidden max-w-64 sm:relative sm:z-0 sm:flex sm:translate-x-0"
+          role="dialog"
+          tabindex="-1"
+        >
+          <div class="drawer-header">
+            <h3
+              class="text-lg md:text-3xl font-bold bg-linear-to-r from-sky-950 via-sky-600 to-sky-400 bg-clip-text text-transparent"
+            >
+              Uni-Find
+            </h3>
+          </div>
+          <div class="drawer-body hover:bg-none px-2">
+            <ul class="flex flex-col items-start gap-2 p-5">
+              <li
+                class="hover:bg-sky-50 hover:text-sky-900 transition-all duration-700 ease-in-out p-4 rounded-lg"
+              >
+                <a
+                  href="#"
+                  class="text-sky-700 flex gap-3 item-start justify-center"
+                >
+                  <i class="ri-home-4-line"></i> <span>Home</span>
+                </a>
+              </li>
+              <li
+                class="hover:bg-sky-50 hover:text-sky-900 transition-all duration-700 ease-in-out p-4 rounded-lg"
+              >
+                <a
+                  href="#"
+                  class="text-sky-700 flex gap-3 item-start justify-center"
+                >
+                  <i class="ri-checkbox-circle-line"></i><span>Founded</span>
+                </a>
+              </li>
+              <li
+                class="hover:bg-sky-50 hover:text-sky-900 transition-all duration-700 ease-in-out p-4 rounded-lg"
+              >
+                <a
+                  href="#"
+                  class="text-sky-700 flex gap-3 item-start justify-center"
+                >
+                  <i class="ri-checkbox-indeterminate-line"></i>
+                  <span>Without owner</span>
+                </a>
+              </li>
+              <li
+                class="hover:bg-sky-50 hover:text-sky-900 transition-all duration-700 ease-in-out p-4 rounded-lg"
+              >
+                <a
+                  href="#"
+                  class="text-sky-700 flex gap-3 item-start justify-center"
+                >
+                  <i class="ri-add-line"></i> <span>Item Founded</span>
+                </a>
+              </li>
+              <li
+                class="hover:bg-sky-50 hover:text-sky-900 transition-all duration-700 ease-in-out p-4 rounded-lg"
+              >
+                <a
+                  href="#"
+                  class="text-sky-700 flex gap-3 item-start justify-center"
+                >
+                  <i class="ri-mail-line"></i> <span>Make report</span>
+                </a>
+              </li>
+              <li
+                class="hover:bg-sky-50 hover:text-sky-900 transition-all duration-700 ease-in-out p-4 rounded-lg"
+              >
+                <a
+                  href="#"
+                  class="text-sky-700 flex gap-3 item-start justify-center"
+                >
+                  <i class="ri-logout-box-line"></i> <span>Sign out</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Content columns -->
+      <div class="flex-1 grid grid-cols-3 gap-2 p-2">
+        <div
+          class="w-full h-full flex flex-col items-center justify-start p-5"
+        >
+      <h5 class="font-semibold text-2xl bg-linear-to-b from-sky-600 via-sky-800 to-sky-900 bg-clip-text text-transparent ">Founded Items</h5>
+      
+      </div>
+        <div
+          class="bg-red-400 w-full h-full flex flex-col items-center justify-center"
+        ></div>
+        <div
+          class="bg-green-600 w-full h-full flex flex-col items-center justify-center"
+        ></div>
+      </div>
+    </main>
+
+    <footer class="footer bg-transparent p-10">
+      <form class="gap-6">
+        <div
+          class="flex items-center gap-5 text-xl font-bold text-base-content"
+        >
+          <img src="/src/assets/logo.png" class="w-20 h-20" alt="" />
+          <div class="flex flex-col items-center justify-evenly h-full gap-5">
+            <span class="font-bold text-sky-700 text-3xl">Uni-Find</span>
+            <p class="text-gray-500/75 text-center text-sm">
+              Lost something?? <br />
+              Don't Panic, It rest here.
+            </p>
+          </div>
+        </div>
+        <div
+          class="bg-transparent text-sky-800 border outline-0 mt-2 rounded-lg border-sky-600 p-2 removing:translate-x-5 removing:opacity-0 flex items-center gap-4 transition duration-300 ease-in-out"
+          role="alert"
+          id="dismiss-alert1"
+        >
+          Any misuse or misleading activity within our community will result in
+          a permanent ban.
+          <button
+            class="ms-auto cursor-pointer leading-none"
+            data-remove-element="#dismiss-alert1"
+            aria-label="Close Button"
+          >
+            <span class="icon-[tabler--x] size-6 text-center font-bold"
+              ><i class="ri-close-large-line"></i
+            ></span>
+          </button>
+        </div>
+      </form>
+
+      <nav class="text-base-content">
+        <h6 class="footer-title text-sky-700 font-semibold">Services</h6>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Find what you lost.</a
+        >
+        <span>
+          <a
+            href="#"
+            class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+            >Contact who found it directly</a
+          >
+          <span class="btn btn-gradient btn-accent text-sm ms-2">New</span>
+        </span>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Leave your number to make the owner contact you</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Make Advertisement about what you finded</a
+        >
+      </nav>
+      <nav class="text-base-content">
+        <h6 class="footer-title text-sky-700 font-semibold">Community</h6>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >About us</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Contact</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Jobs</a
+        >
+      </nav>
+      <nav class="text-base-content">
+        <h6 class="footer-title text-sky-700 font-semibold">Legal</h6>
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Terms of use</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Privacy policy</a
+        >
+        <a
+          href="#"
+          class="link text-sky-600 font-mono hover:text-sky-950 link-hover"
+          >Cookie policy</a
+        >
+      </nav>
+    </footer>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+      AOS.init();
+    </script>
+    <script src="/src/js/user.js"></script>
+  </body>
+</html>
