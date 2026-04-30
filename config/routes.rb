@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root to: "home#index"
   get "dashboard", to: "dashboard#index"
 
-  resources :items
+  resources :items, except: [:index]
 
 
 end

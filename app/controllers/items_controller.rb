@@ -8,9 +8,7 @@ class ItemsController < ApplicationController
     @items = Item.all
   end
 
-  def show
-    @item = Item.find(params[:id])
-  end
+
 
   def new
     @item = current_user.items.new
@@ -30,9 +28,7 @@ class ItemsController < ApplicationController
     end
   end
 
-  def edit
-    @item = Item.find(params[:id])
-  end
+
 
   def update
     if params[:item][:image]
@@ -48,7 +44,7 @@ class ItemsController < ApplicationController
 
   def destroy
     @item.destroy
-    redirect_to items_path, notice: "Deleted successfully"
+    redirect_to dashboard_path, notice: "Deleted successfully"
   end
 
   private
@@ -58,7 +54,7 @@ class ItemsController < ApplicationController
   end
 
   def authorize_user!
-    redirect_to items_path, alert: "Not allowed" unless @item.user == current_user
+    redirect_to dashboard_path, alert: "Not allowed" unless @item.user == current_user
   end
 
   def item_params
