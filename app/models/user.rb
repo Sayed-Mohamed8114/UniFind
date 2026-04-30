@@ -8,4 +8,8 @@ class User < ApplicationRecord
             presence: true,
             uniqueness: true,
             format: { with: /\A\d{9}\z/, message: "must be exactly 9 digits" }
+
+  has_many :items, dependent: :destroy
+       
+       
 end

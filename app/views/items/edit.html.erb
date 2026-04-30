@@ -1,0 +1,36 @@
+<h1>Edit Item</h1>
+
+<%= form_with model: @item, local: true do |f| %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.label :status %><br>
+    <%= f.select :status, Item.statuses.keys %>
+  </p>
+
+  <p>
+    <%= f.label :is_resolved %>
+    <%= f.check_box :is_resolved %>
+  </p>
+
+  <p>
+    <%= f.label :image %><br>
+    <%= f.file_field :image %>
+  </p>
+
+  <%= f.submit "Update Item" %>
+
+<% end %>
+
+<hr>
+
+<%= link_to "Back", dashboard_index_path %>

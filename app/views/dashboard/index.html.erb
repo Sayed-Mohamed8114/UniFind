@@ -1,8 +1,83 @@
-<h1>Dashboard#index</h1>
-<p>Find me in app/views/dashboard/index.html.erb</p>
+<h1>Dashboard</h1>
+
 <p>
   Academic ID: <%= current_user.academic_id %>
 </p>
+
 <p>
   Name: <%= current_user.name %>
 </p>
+
+<hr>
+
+<h2>Create New Item</h2>
+
+<%= form_with model: @item, url: items_path, local: true do |f| %>
+
+  <p>
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </p>
+
+  <p>
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </p>
+
+  <p>
+    <%= f.label :status %><br>
+    <%= f.select :status, Item.statuses.keys %>
+  </p>
+
+  <p>
+    <%= f.label :is_resolved %>
+    <%= f.check_box :is_resolved %>
+  </p>
+
+  <p>
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </p>
+
+  <%= f.submit "Create Item" %>
+
+<% end %>
+
+<hr>
+
+<h2>Your Items</h2>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Title</th>
+    <th>Status</th>
+    <th>Resolved</th>
+    <th>Image</th>
+    <th>Actions</th>
+  </tr>
+
+  <% @items.each do |item| %>
+    <tr>
+      <td><%= item.title %></td>
+      <td><%= item.status %></td>
+      <td><%= item.is_resolved ? "Yes" : "No" %></td>
+
+      <td>
+        <% if item.image_path.present? %>
+          <img src="<%= item.image_path %>" width="80">
+        <% end %>
+      </td>
+
+      <td>
+        <%= link_to "Show", item_path(item) %>
+
+        <% if item.user == current_user %>
+          | <%= link_to "Edit", edit_item_path(item) %>
+          | <%= link_to "Delete", item_path(item),
+              method: :delete,
+              data: { confirm: "Are you sure?" } %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</table>
