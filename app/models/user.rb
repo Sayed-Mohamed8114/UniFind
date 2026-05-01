@@ -11,12 +11,21 @@ class User < ApplicationRecord
 
   has_many :items, dependent: :destroy
   has_many :comments, dependent: :destroy 
+  scope :blocked_users, -> { where(blocked: true) }
+  def active_for_authentication?
+    super && !blocked?
+  end
+
+  def inactive_message
+    blocked? ? "Your account has been blocked by admin." : super
+  end
   def self.ransackable_attributes(auth_object = nil)
     %w[
       id
       email
       name
       academic_id
+      blocked
       created_at
       updated_at
     ]

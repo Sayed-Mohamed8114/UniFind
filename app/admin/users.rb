@@ -1,10 +1,11 @@
 ActiveAdmin.register User do
-  permit_params :email, :name, :academic_id
+  permit_params :email, :name, :academic_id, :blocked
 
   filter :email
   filter :name
   filter :academic_id
   filter :created_at
+  filter :blocked
 
   index do
     selectable_column
@@ -12,6 +13,7 @@ ActiveAdmin.register User do
     column :email
     column :name
     column :academic_id
+    column :blocked
     column :created_at
     actions
   end
@@ -21,6 +23,7 @@ ActiveAdmin.register User do
       f.input :email
       f.input :name
       f.input :academic_id
+      f.input :blocked, as: :boolean
     end
     f.actions
   end
