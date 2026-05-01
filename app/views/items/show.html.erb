@@ -27,6 +27,36 @@
 <% end %>
 
 <hr>
+<h3>Add Comment</h3>
+
+<%= form_with model: [@item, Comment.new], local: true do |f| %>
+  <p>
+    <%= f.text_area :content %>
+  </p>
+
+  <%= f.submit "Post Comment" %>
+<% end %>
+<hr>
+<h3>Comments</h3>
+
+<% @item.comments.each do |comment| %>
+  <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;">
+    
+    <strong><%= comment.user.name %></strong><br>
+    <%= comment.content %>
+
+    <% if comment.user == current_user %>
+      <br>
+      <%= link_to "Edit", edit_item_comment_path(@item, comment) %>
+      |
+      <%= button_to "Delete",
+            item_comment_path(@item, comment),
+            method: :delete %>
+    <% end %>
+
+  </div>
+<% end %>
+<hr>
 
 <% if @item.user == current_user %>
   <%= link_to "Edit", edit_item_path(@item) %> |

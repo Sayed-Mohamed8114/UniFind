@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   root to: "home#index"
   get "dashboard", to: "dashboard#index"
 
-  resources :items, except: [:index]
+  resources :items, except: [:index] do
+    resources :comments, only: [:create, :destroy , :edit, :update]
+  end
 
 
 end

@@ -4,4 +4,5 @@ class Item < ApplicationRecord
   enum status: { lost: 0, found: 1 }
 
   validates :title, :description, :status, presence: true
+  has_many :comments, dependent: :destroy
 end
