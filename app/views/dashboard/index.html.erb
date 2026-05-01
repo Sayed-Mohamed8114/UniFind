@@ -48,6 +48,7 @@
     <th>Title</th>
     <th>Status</th>
     <th>Resolved</th>
+    <th>Verified</th>
     <th>Image</th>
     <th>Actions</th>
   </tr>
@@ -57,7 +58,7 @@
       <td><%= item.title %></td>
       <td><%= item.status %></td>
       <td><%= item.is_resolved ? "Yes" : "No" %></td>
-
+      <td><%= item.is_verified ? "Yes" : "No" %></td>
       <td>
         <% if item.image_path.present? %>
           <img src="<%= item.image_path %>" width="80">

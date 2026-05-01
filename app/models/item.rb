@@ -9,6 +9,7 @@ class Item < ApplicationRecord
       user_id
       image_path
       is_resolved
+      is_verified
       created_at
       updated_at
     ]
