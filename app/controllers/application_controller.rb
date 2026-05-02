@@ -1,5 +1,13 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :check_blocked_user
+
+  def check_blocked_user
+    if current_user&.blocked?
+      sign_out current_user
+      redirect_to new_user_session_path, alert: "Your account is blocked."
+    end
+  end
 
   protected
 
