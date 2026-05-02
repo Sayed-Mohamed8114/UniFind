@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2026_05_01_213124) do
+ActiveRecord::Schema.define(version: 2026_05_02_092307) do
 
   create_table "active_admin_comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "namespace"
@@ -61,6 +61,22 @@ ActiveRecord::Schema.define(version: 2026_05_01_213124) do
     t.index ["user_id"], name: "index_items_on_user_id"
   end
 
+  create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "sender_type", null: false
+    t.bigint "sender_id", null: false
+    t.bigint "item_id", null: false
+    t.string "notification_type", null: false
+    t.boolean "is_read", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["is_read"], name: "index_notifications_on_is_read"
+    t.index ["item_id"], name: "index_notifications_on_item_id"
+    t.index ["notification_type"], name: "index_notifications_on_notification_type"
+    t.index ["sender_type", "sender_id"], name: "index_notifications_on_sender"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -80,4 +96,6 @@ ActiveRecord::Schema.define(version: 2026_05_01_213124) do
   add_foreign_key "comments", "items"
   add_foreign_key "comments", "users"
   add_foreign_key "items", "users"
+  add_foreign_key "notifications", "items"
+  add_foreign_key "notifications", "users"
 end

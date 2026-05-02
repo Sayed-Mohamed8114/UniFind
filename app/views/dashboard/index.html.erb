@@ -9,6 +9,10 @@
 </p>
 
 <hr>
+🔔 Notifications (<%= current_user.notifications.where(is_read: false).count %>)
+<br>
+<%= link_to "My Notifications", notifications_path %>
+<hr>
 
 <h2>Create New Item</h2>
 

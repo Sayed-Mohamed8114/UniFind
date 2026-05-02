@@ -18,4 +18,5 @@ class AdminUser < ApplicationRecord
   def self.ransackable_associations(auth_object = nil)
     []
   end
+  has_many :sent_notifications, as: :sender, class_name: "Notification"
 end

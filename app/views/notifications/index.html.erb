@@ -1,0 +1,38 @@
+<h1>Notifications</h1>
+
+<% @notifications.each do |notification| %>
+  <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;
+              background-color: <%= notification.is_read ? '#f5f5f5' : '#e6f7ff' %>">
+
+    <p>
+      <% if notification.notification_type == "comment" %>
+        💬 New comment on your item:
+      <% elsif notification.notification_type == "verified" %>
+        ✔ Your item has been verified:
+      <% end %>
+    </p>
+
+    <p>
+      <strong><%= notification.item.title %></strong>
+    </p>
+
+    <p>
+      From: <%= notification.sender_type %>
+    </p>
+
+    <small>
+      <%= time_ago_in_words(notification.created_at) %> ago
+    </small>
+
+    <br><br>
+
+    <% unless notification.is_read %>
+      <%= button_to "Mark as read",
+            mark_as_read_notification_path(notification),
+            method: :patch %>
+    <% else %>
+      ✔ Read
+    <% end %>
+
+  </div>
+<% end %>

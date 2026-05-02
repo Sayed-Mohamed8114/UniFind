@@ -1,5 +1,5 @@
 ActiveAdmin.register Item do
-  permit_params :title, :description, :status, :user_id, :image_path, :is_resolved, :is_verified
+  permit_params :title, :description, :status, :user_id, :image_path, :is_resolved
 
   index do
     selectable_column
@@ -10,25 +10,31 @@ ActiveAdmin.register Item do
     column :is_resolved
     column :is_verified
     column :created_at
+
+    column "Actions" do |item|
+      if !item.is_verified
+        link_to "Verify", verify_admin_item_path(item), method: :put
+      else
+        "✔ Verified"
+      end
+    end
+
     actions
   end
 
-  filter :title
-  filter :status
-  filter :is_resolved
-  filter :is_verified
-  filter :created_at
+  member_action :verify, method: :put do
+    item = Item.find(params[:id])
+    item.update(is_verified: true)
 
-  form do |f|
-    f.inputs do
-      f.input :title
-      f.input :description
-      f.input :status
-      f.input :user
-      f.input :image_path
-      f.input :is_resolved
-      f.input :is_verified
-    end
-    f.actions
+    # create notification for user
+    Notification.create!(
+      user: item.user,
+      sender: current_admin_user,
+      item: item,
+      notification_type: :verified,
+      is_read: false
+    )
+
+    redirect_to admin_items_path, notice: "Item verified"
   end
 end

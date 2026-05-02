@@ -8,6 +8,17 @@ class CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
+      # 🚨 create notification for item owner (if not self-comment)
+      if @item.user != current_user
+        Notification.create!(
+          user: @item.user,
+          sender: current_user,
+          item: @item,
+          notification_type: :comment,
+          is_read: false
+        )
+      end
+
       redirect_to item_path(@item), notice: "Comment added"
     else
       redirect_to item_path(@item), alert: "Failed to add comment"

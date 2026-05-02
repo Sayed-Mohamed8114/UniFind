@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'notifications/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   get 'dashboard/index'
@@ -10,6 +11,11 @@ Rails.application.routes.draw do
 
   resources :items, except: [:index] do
     resources :comments, only: [:create, :destroy , :edit, :update]
+  end
+  resources :notifications, only: [:index] do
+    member do
+      patch :mark_as_read
+    end
   end
 
 
