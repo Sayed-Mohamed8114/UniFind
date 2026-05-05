@@ -10,6 +10,7 @@ class User < ApplicationRecord
             format: { with: /\A\d{9}\z/, message: "must be exactly 9 digits" }
 
   has_many :items, dependent: :destroy
+  has_many :claims, dependent: :destroy
   has_many :comments, dependent: :destroy 
   scope :blocked_users, -> { where(blocked: true) }
   has_many :sent_notifications, as: :sender, class_name: "Notification"

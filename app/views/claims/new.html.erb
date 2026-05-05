@@ -1,0 +1,14 @@
+<!-- app/views/claims/new.html.erb -->
+
+<h2>Claim Item: <%= @item.title %></h2>
+
+<%= form_with model: [@item, @claim], local: true do |f| %>
+
+  <p>
+    <%= f.label :content, "Why do you think this item is yours?" %><br>
+    <%= f.text_area :content %>
+  </p>
+
+  <%= f.submit "Submit Claim" %>
+
+<% end %>

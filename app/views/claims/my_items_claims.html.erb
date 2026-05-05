@@ -1,0 +1,21 @@
+<!-- app/views/claims/my_items_claims.html.erb -->
+
+<h1>Claims on Your Items</h1>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>Item</th>
+    <th>Claimed By</th>
+    <th>Content</th>
+    <th>Date</th>
+  </tr>
+
+  <% @claims.each do |claim| %>
+    <tr>
+      <td><%= claim.item.title %></td>
+      <td><%= claim.user.name %></td>
+      <td><%= claim.content %></td>
+      <td><%= claim.created_at.strftime("%Y-%m-%d") %></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,22 +1,27 @@
 Rails.application.routes.draw do
-  get 'notifications/index'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  get 'dashboard/index'
+
   devise_for :users
-  # get 'home/index'
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   root to: "home#index"
+
   get "dashboard", to: "dashboard#index"
 
   resources :items, except: [:index] do
-    resources :comments, only: [:create, :destroy , :edit, :update]
+    resources :comments, only: [:create, :destroy, :edit, :update]
+    resources :claims, only: [:new, :create]
   end
+
   resources :notifications, only: [:index] do
     member do
       patch :mark_as_read
     end
   end
 
-
+  resources :claims, only: [] do
+    collection do
+      get :my_items_claims
+    end
+  end
 end

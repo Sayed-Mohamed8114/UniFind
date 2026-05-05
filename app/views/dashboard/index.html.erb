@@ -13,7 +13,12 @@
 <br>
 <%= link_to "My Notifications", notifications_path %>
 <hr>
+<br><br>
 
+<%= link_to "View Claims on My Items", my_items_claims_claims_path %>
+
+<hr>
+<br><br>
 <h2>Create New Item</h2>
 
 <%= form_with model: @item, url: items_path, local: true do |f| %>
@@ -78,6 +83,10 @@
                 item_path(item),
                 method: :delete,
                 data: { confirm: "Are you sure?" } %>
+        <% else %>
+        | <%= button_to "Claim",
+              new_item_claim_path(item),
+              method: :get %>
         <% end %>
       </td>
     </tr>
