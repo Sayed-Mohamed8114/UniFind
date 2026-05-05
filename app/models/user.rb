@@ -13,7 +13,7 @@ class User < ApplicationRecord
   has_many :claims, dependent: :destroy
   has_many :comments, dependent: :destroy 
   scope :blocked_users, -> { where(blocked: true) }
-  has_many :sent_notifications, as: :sender, class_name: "Notification"
+  has_many :sent_notifications, as: :sender, class_name: "Notification", dependent: :destroy
   has_many :notifications, dependent: :destroy
   def active_for_authentication?
     super && !blocked?

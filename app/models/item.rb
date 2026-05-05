@@ -3,7 +3,7 @@ class Item < ApplicationRecord
   before_update :handle_verification, if: :saved_change_to_is_verified?
 
   def self.ransackable_associations(auth_object = nil)
-    ["user", "comments", "claims"] # allow searching by associated user, comments, and claims
+    ["user", "comments", "claims", "notifications"] # allow searching by associated user, comments, and claims
   end
   def self.ransackable_attributes(auth_object = nil)
     %w[
