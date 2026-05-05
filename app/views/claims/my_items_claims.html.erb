@@ -1,21 +1,473 @@
-<!-- app/views/claims/my_items_claims.html.erb -->
+<div class="claims-container">
+  
+  <!-- Page Header -->
+  <div class="page-header" data-aos="fade-down">
+    <div class="header-content">
+      <div class="header-icon">📋</div>
+      <div class="header-text">
+        <h1>Claims on Your Items</h1>
+        <p>Review and manage claims submitted by other users for your lost & found items</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <span class="stat-badge">
+        <span class="stat-number"><%= @claims.count %></span>
+        <span class="stat-label">Total Claims</span>
+      </span>
+    </div>
+  </div>
 
-<h1>Claims on Your Items</h1>
+  <% if @claims.any? %>
+    <!-- Claims Grid -->
+    <div class="claims-grid">
+      <% @claims.each do |claim| %>
+        <div class="claim-card" data-aos="fade-up">
+          <!-- Item Header -->
+          <div class="claim-item-header">
+            <div class="item-info">
+              <div class="item-icon">📦</div>
+              <div>
+                <h3 class="item-title"><%= claim.item.title %></h3>
+                <span class="item-status <%= claim.item.status %>">
+                  <%= claim.item.status.upcase %>
+                </span>
+              </div>
+            </div>
+            <div class="claim-date">
+              <span class="date-icon">📅</span>
+              <span><%= claim.created_at.strftime("%B %d, %Y") %></span>
+            </div>
+          </div>
 
-<table border="1" cellpadding="8">
-  <tr>
-    <th>Item</th>
-    <th>Claimed By</th>
-    <th>Content</th>
-    <th>Date</th>
-  </tr>
+          <!-- Claim Details -->
+          <div class="claim-details">
+            <div class="claimant-info">
+              <div class="info-row">
+                <span class="info-label">Claimed By:</span>
+                <span class="info-value">
+                  <span class="user-icon">👤</span>
+                  <%= claim.user.name %>
+                </span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Email:</span>
+                <span class="info-value">
+                  <span class="email-icon">📧</span>
+                  <%= claim.user.email %>
+                </span>
+              </div>
+              <div class="info-row">
+                <span class="info-label">Academic ID:</span>
+                <span class="info-value">
+                  <span class="id-icon">🆔</span>
+                  <%= claim.user.academic_id %>
+                </span>
+              </div>
+            </div>
 
-  <% @claims.each do |claim| %>
-    <tr>
-      <td><%= claim.item.title %></td>
-      <td><%= claim.user.name %></td>
-      <td><%= claim.content %></td>
-      <td><%= claim.created_at.strftime("%Y-%m-%d") %></td>
-    </tr>
+            <!-- Claim Message -->
+            <div class="claim-message">
+              <div class="message-header">
+                <span class="message-icon">💬</span>
+                <strong>Claim Message:</strong>
+              </div>
+              <p class="message-content"><%= claim.content %></p>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="claim-actions">
+              <%= link_to "View Item Details", item_path(claim.item), class: "btn btn-outline btn-small" %>
+              
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- Empty State -->
+    <div class="empty-state" data-aos="fade-up">
+      <div class="empty-icon">📭</div>
+      <h3>No Claims Yet</h3>
+      <p>No one has claimed any of your items yet.</p>
+      <p>When someone claims an item you reported, it will appear here.</p>
+      <%= link_to "View Your Items", dashboard_path, class: "btn btn-primary mt-3" %>
+    </div>
   <% end %>
-</table>
+</div>
+
+<style>
+  /* Claims Page Styles */
+  .claims-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Page Header */
+  .page-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: white;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-icon {
+    font-size: 48px;
+  }
+
+  .header-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .header-text p {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .header-stats {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+  }
+
+  .stat-badge {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  /* Claims Grid */
+  .claims-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Claim Card */
+  .claim-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    transition: all 0.3s ease;
+  }
+
+  .claim-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 20px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  .claim-item-header {
+    background: #f8fafc;
+    padding: 20px 24px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .item-icon {
+    font-size: 32px;
+  }
+
+  .item-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+
+  .item-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .item-status.lost {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  .item-status.found {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  .claim-date {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .date-icon {
+    font-size: 14px;
+  }
+
+  /* Claim Details */
+  .claim-details {
+    padding: 24px;
+  }
+
+  .claimant-info {
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+  }
+
+  .info-row {
+    display: flex;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+
+  .info-row:last-child {
+    margin-bottom: 0;
+  }
+
+  .info-label {
+    width: 120px;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  .info-value {
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .user-icon,
+  .email-icon,
+  .id-icon {
+    font-size: 14px;
+  }
+
+  /* Claim Message */
+  .claim-message {
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .message-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    color: #854d0e;
+  }
+
+  .message-icon {
+    font-size: 16px;
+  }
+
+  .message-content {
+    color: #1e293b;
+    line-height: 1.6;
+    margin: 0;
+    font-size: 14px;
+  }
+
+  /* Action Buttons */
+  .claim-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-small {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+  }
+
+  .btn-outline:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-success {
+    background: #10b981;
+    color: white;
+  }
+
+  .btn-success:hover {
+    background: #059669;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  }
+
+  .resolved-badge {
+    background: #d1fae5;
+    color: #059669;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .empty-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+  }
+
+  .empty-state h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+  }
+
+  .empty-state p {
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .mt-3 {
+    margin-top: 16px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .claims-container {
+      padding: 16px;
+    }
+
+    .page-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .header-content {
+      flex-direction: column;
+    }
+
+    .claim-item-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .item-info {
+      flex-direction: column;
+    }
+
+    .info-row {
+      flex-direction: column;
+    }
+
+    .info-label {
+      width: auto;
+      margin-bottom: 4px;
+    }
+
+    .claim-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .claim-actions .btn,
+    .claim-actions .resolved-badge {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+
+  /* Animation for new claims */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .claim-card {
+    animation: slideIn 0.3s ease-out;
+  }
+</style>

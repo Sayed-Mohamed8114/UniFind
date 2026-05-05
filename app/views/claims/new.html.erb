@@ -1,14 +1,585 @@
-<!-- app/views/claims/new.html.erb -->
+<div class="new-claim-container">
+  
+  <!-- Back Button -->
+  <div class="back-button">
+    <%= link_to item_path(@item), class: "back-link" do %>
+      <span>←</span> Back to Item
+    <% end %>
+  </div>
 
-<h2>Claim Item: <%= @item.title %></h2>
+  <!-- Claim Card -->
+  <div class="claim-card" data-aos="fade-up">
+    
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-icon">📩</div>
+      <div class="header-text">
+        <h1>Claim This Item</h1>
+        <p>Please provide details to verify this item belongs to you</p>
+      </div>
+    </div>
 
-<%= form_with model: [@item, @claim], local: true do |f| %>
+    <!-- Item Summary -->
+    <div class="item-summary">
+      <div class="summary-label">Item Details</div>
+      <div class="summary-content">
+        <div class="item-info">
+          <div class="item-badge <%= @item.status %>">
+            <%= @item.status.upcase %>
+          </div>
+          <h2 class="item-title"><%= @item.title %></h2>
+        </div>
+        
+        <div class="item-description">
+          <strong>Description:</strong>
+          <p><%= @item.description %></p>
+        </div>
 
-  <p>
-    <%= f.label :content, "Why do you think this item is yours?" %><br>
-    <%= f.text_area :content %>
-  </p>
+        <div class="item-meta">
+          <div class="meta-item">
+            <span class="meta-icon">👤</span>
+            <span>Owner: <%= @item.user.name %></span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-icon">📅</span>
+            <span>Posted: <%= time_ago_in_words(@item.created_at) %> ago</span>
+          </div>
+          <% if @item.image_path.present? %>
+            <div class="meta-item">
+              <span class="meta-icon">🖼️</span>
+              <span>Image available</span>
+            </div>
+          <% end %>
+        </div>
 
-  <%= f.submit "Submit Claim" %>
+        <% if @item.image_path.present? %>
+          <div class="item-image-preview">
+            <img src="<%= @item.image_path %>" alt="<%= @item.title %>">
+          </div>
+        <% end %>
+      </div>
+    </div>
 
-<% end %>
+    <!-- Claim Form -->
+    <div class="claim-form-section">
+      <div class="form-header">
+        <span class="form-icon">✍️</span>
+        <h3>Claim Details</h3>
+      </div>
+      
+      <div class="claim-guidelines">
+        <div class="guideline">
+          <span class="guideline-icon">💡</span>
+          <div>
+            <strong>Tips for a successful claim:</strong>
+            <ul>
+              <li>Describe unique features or markings</li>
+              <li>Mention when and where you lost the item</li>
+              <li>Provide any proof of ownership (receipt, photos, etc.)</li>
+              <li>Be honest and specific</li>
+              <li>Include contact information for follow-up</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <%= form_with model: [@item, @claim], local: true, html: { class: "claim-form" } do |f| %>
+        
+        <div class="form-group">
+          <%= f.label :content, class: "form-label" do %>
+            <span class="label-icon">💬</span>
+            Why do you think this item is yours?<br>
+            Add contact so the owner can reach you if needed.
+          <% end %>
+          <%= f.text_area :content, 
+                class: "form-textarea", 
+                rows: 8, 
+                placeholder: "Example: I lost my blue backpack in the library on March 15th. It has a small tear on the bottom and contains my laptop with a 'John' sticker...",
+                required: true,
+                autofocus: true %>
+          <div class="form-hint">
+            <span class="hint-icon">ℹ️</span>
+            Be as detailed as possible. The owner will review your claim.
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <%= f.submit "Submit Claim", class: "btn btn-primary" %>
+          <%= link_to "Cancel", item_path(@item), class: "btn btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Warning Section -->
+    <div class="warning-section">
+      <div class="warning-content">
+        <span class="warning-icon">⚠️</span>
+        <div>
+          <strong>Important Notice:</strong>
+          <p>False claims or misleading information may result in account suspension. Please only claim items that genuinely belong to you.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* New Claim Styles */
+  .new-claim-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Back Button */
+  .back-button {
+    margin-bottom: 24px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    transform: translateX(-4px);
+    color: #2563eb;
+  }
+
+  /* Claim Card */
+  .claim-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Card Header */
+  .card-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: white;
+  }
+
+  .header-icon {
+    font-size: 48px;
+  }
+
+  .header-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .header-text p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  /* Item Summary */
+  .item-summary {
+    padding: 24px 32px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .summary-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .item-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .item-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .item-badge.lost {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  .item-badge.found {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  .item-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  .item-description {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .item-description strong {
+    display: block;
+    color: #1e293b;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+
+  .item-description p {
+    color: #475569;
+    line-height: 1.6;
+    margin: 0;
+    font-size: 14px;
+  }
+
+  .item-meta {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #64748b;
+  }
+
+  .meta-icon {
+    font-size: 14px;
+  }
+
+  .item-image-preview {
+    max-width: 300px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e2e8f0;
+    background: white;
+  }
+
+  .item-image-preview img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Claim Form Section */
+  .claim-form-section {
+    padding: 32px;
+  }
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .form-icon {
+    font-size: 28px;
+  }
+
+  .form-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  /* Guidelines */
+  .claim-guidelines {
+    background: #fefce8;
+    border-left: 4px solid #eab308;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  .guideline {
+    display: flex;
+    gap: 12px;
+  }
+
+  .guideline-icon {
+    font-size: 20px;
+  }
+
+  .guideline strong {
+    display: block;
+    color: #854d0e;
+    margin-bottom: 8px;
+    font-size: 14px;
+  }
+
+  .guideline ul {
+    margin: 0;
+    padding-left: 20px;
+    color: #713f12;
+    font-size: 13px;
+  }
+
+  .guideline li {
+    margin-bottom: 4px;
+  }
+
+  /* Form */
+  .claim-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .label-icon {
+    font-size: 16px;
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+  }
+
+  .form-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .hint-icon {
+    font-size: 12px;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    padding-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-secondary {
+    background: #64748b;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background: #475569;
+    transform: translateY(-2px);
+  }
+
+  /* Warning Section */
+  .warning-section {
+    padding: 20px 32px 32px;
+  }
+
+  .warning-content {
+    display: flex;
+    gap: 12px;
+    background: #fef2f2;
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid #fee2e2;
+  }
+
+  .warning-icon {
+    font-size: 20px;
+  }
+
+  .warning-content strong {
+    display: block;
+    color: #991b1b;
+    font-size: 13px;
+    margin-bottom: 4px;
+  }
+
+  .warning-content p {
+    color: #7f1d1d;
+    font-size: 12px;
+    margin: 0;
+  }
+
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .claim-card {
+    animation: slideIn 0.4s ease-out;
+  }
+
+  /* Character Counter */
+  .character-counter {
+    text-align: right;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .new-claim-container {
+      padding: 16px;
+    }
+
+    .card-header {
+      flex-direction: column;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .header-icon {
+      font-size: 36px;
+    }
+
+    .header-text h1 {
+      font-size: 24px;
+    }
+
+    .item-summary {
+      padding: 20px;
+    }
+
+    .item-info {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .claim-form-section {
+      padding: 24px;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .form-actions .btn {
+      width: 100%;
+    }
+
+    .warning-section {
+      padding: 20px 24px 24px;
+    }
+
+    .guideline {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<!-- JavaScript for Character Counter -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.querySelector('.form-textarea');
+    if (textarea) {
+      // Add character counter
+      const counterDiv = document.createElement('div');
+      counterDiv.className = 'character-counter';
+      textarea.parentNode.appendChild(counterDiv);
+      
+      function updateCounter() {
+        const length = textarea.value.length;
+        counterDiv.textContent = `${length} characters`;
+        if (length > 500) {
+          counterDiv.style.color = '#ef4444';
+        } else if (length > 300) {
+          counterDiv.style.color = '#f59e0b';
+        } else {
+          counterDiv.style.color = '#64748b';
+        }
+      }
+      
+      textarea.addEventListener('input', updateCounter);
+      updateCounter();
+    }
+  });
+</script>

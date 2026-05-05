@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   get 'dashboard/index'
 
-  resources :items, except: [:index] do
+  resources :items do
     resources :comments, only: [:create, :destroy, :edit, :update]
     resources :claims, only: [:new, :create]
   end

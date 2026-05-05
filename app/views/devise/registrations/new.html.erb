@@ -1,36 +1,147 @@
-<h2>Sign up</h2>
+<div class="auth-container">
+  <div class="auth-card" data-aos="fade-up">
+    <div class="auth-header">
+      <div class="auth-icon">🎓</div>
+      <h2>Create Account</h2>
+      <p>Join UniFind to report or find lost items</p>
+    </div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true %>
-  </div>
-  <div class="field">
-    <%= f.label :academic_id %><br />
-    <%= f.text_field :academic_id, autofocus: true %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "auth-form" }) do |f| %>
+      
+      <div class="form-group">
+        <%= f.label :name, class: "form-label" do %>
+          <span class="label-icon">👤</span>
+          Full Name
+        <% end %>
+        <%= f.text_field :name, autofocus: true, class: "form-input", placeholder: "Ahmed Mohamed", required: true %>
+      </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
+      <div class="form-group">
+        <%= f.label :academic_id, class: "form-label" do %>
+          <span class="label-icon">🆔</span>
+          Academic ID
+        <% end %>
+        <%= f.text_field :academic_id, class: "form-input", placeholder: "20240001", required: true %>
+        <small class="form-hint">Your university student ID number</small>
+      </div>
 
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
+      <div class="form-group">
+        <%= f.label :email, class: "form-label" do %>
+          <span class="label-icon">📧</span>
+          Email Address
+        <% end %>
+        <%= f.email_field :email, autocomplete: "email", class: "form-input", placeholder: "student@university.com", required: true %>
+      </div>
 
-<%= render "devise/shared/links" %>
+      <div class="form-group">
+        <%= f.label :password, class: "form-label" do %>
+          <span class="label-icon">🔒</span>
+          Password
+        <% end %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "form-input", placeholder: "••••••••", required: true %>
+        <% if @minimum_password_length %>
+          <small class="form-hint"><%= @minimum_password_length %> characters minimum</small>
+        <% end %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, class: "form-label" do %>
+          <span class="label-icon">✓</span>
+          Confirm Password
+        <% end %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-input", placeholder: "••••••••", required: true %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.submit "Create Account", class: "btn btn-primary btn-full" %>
+      </div>
+    <% end %>
+
+    <div class="auth-footer">
+      <p>Already have an account? <%= render "devise/shared/links" %></p>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Same styles as login page plus these additions */
+  
+  .form-hint {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+
+  /* Password strength indicator (optional) */
+  .password-strength {
+    margin-top: 8px;
+  }
+
+  .strength-bar {
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+
+  .strength-bar-fill {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease;
+  }
+
+  .strength-text {
+    font-size: 11px;
+    color: #94a3b8;
+  }
+
+  /* Error messages styling */
+  .field_with_errors {
+    display: contents;
+  }
+
+  .error-message {
+    color: #ef4444;
+    font-size: 12px;
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .error-message::before {
+    content: "⚠️";
+    font-size: 10px;
+  }
+</style>
+
+<script>
+  // Optional: Add password strength indicator
+  document.addEventListener('DOMContentLoaded', function() {
+    const passwordInput = document.querySelector('#user_password');
+    if (passwordInput) {
+      passwordInput.addEventListener('input', function() {
+        const strength = calculatePasswordStrength(this.value);
+        updateStrengthIndicator(strength);
+      });
+    }
+  });
+
+  function calculatePasswordStrength(password) {
+    let strength = 0;
+    if (password.length >= 8) strength++;
+    if (password.match(/[a-z]+/)) strength++;
+    if (password.match(/[A-Z]+/)) strength++;
+    if (password.match(/[0-9]+/)) strength++;
+    if (password.match(/[$@#&!]+/)) strength++;
+    return strength;
+  }
+
+  function updateStrengthIndicator(strength) {
+    // This is optional - you can implement if you want
+    console.log("Password strength:", strength);
+  }
+</script>

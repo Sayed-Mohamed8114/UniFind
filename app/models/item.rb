@@ -25,6 +25,7 @@ class Item < ApplicationRecord
   validates :title, :description, :status, presence: true
   has_many :comments, dependent: :destroy
   has_many :claims, dependent: :destroy
+  has_many :notifications, dependent: :destroy
 
   private
 

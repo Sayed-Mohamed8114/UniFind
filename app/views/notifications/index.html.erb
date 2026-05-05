@@ -1,48 +1,495 @@
-<h1>Notifications</h1>
-
-<% @notifications.each do |notification| %>
-  <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;
-              background-color: <%= notification.is_read ? '#f5f5f5' : '#e6f7ff' %>">
-
-  <p>
-    <% if notification.comment? %>
-      💬 New comment on your item:
-    <% elsif notification.verified? %>
-      ✔ Your item has been verified:
-    <% elsif notification.claim? %>
-      📩 New claim submitted for your item:
-    <% end %>
-  </p>
-
-    <p>
-      <strong><%= notification.item.title %></strong>
-    </p>
-
-  <p>
-    From:
-    <% if notification.sender.present? %>
-      <strong>
-        <%= notification.sender.try(:email) || notification.sender.try(:name) || notification.sender_type %>
-      </strong>
-      (<%= notification.sender_type %>)
-    <% else %>
-      Unknown
-    <% end %>
-  </p>
-
-    <small>
-      <%= time_ago_in_words(notification.created_at) %> ago
-    </small>
-
-    <br><br>
-
-    <% unless notification.is_read %>
-      <%= button_to "Mark as read",
-            mark_as_read_notification_path(notification),
-            method: :patch %>
-    <% else %>
-      ✔ Read
-    <% end %>
-
+<div class="notifications-container">
+  
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="header-content">
+      <div class="header-icon">🔔</div>
+      <div class="header-text">
+        <h1>Notifications</h1>
+        <p>Stay updated on your items and claims</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <span class="stat-badge">
+        <span class="stat-number"><%= @notifications.count %></span>
+        <span class="stat-label">Total</span>
+      </span>
+      <span class="stat-badge unread">
+        <span class="stat-number"><%= @notifications.where(is_read: false).count %></span>
+        <span class="stat-label">Unread</span>
+      </span>
+    </div>
   </div>
-<% end %>
+
+
+
+  <% if @notifications.any? %>
+    <!-- Notifications List -->
+    <div class="notifications-list">
+      <% @notifications.each do |notification| %>
+        <div class="notification-card <%= 'unread' unless notification.is_read %>" 
+             data-aos="fade-up" >
+          
+          <!-- Notification Icon -->
+          <div class="notification-icon">
+            <% if notification.comment? %>
+              💬
+            <% elsif notification.verified? %>
+              ✅
+            <% elsif notification.claim? %>
+              📩
+            <% else %>
+              🔔
+            <% end %>
+          </div>
+
+          <!-- Notification Content -->
+          <div class="notification-content">
+            <div class="notification-header">
+              <div class="notification-type">
+                <% if notification.comment? %>
+                  <span class="type-badge comment">New Comment</span>
+                <% elsif notification.verified? %>
+                  <span class="type-badge verified">Item Verified</span>
+                <% elsif notification.claim? %>
+                  <span class="type-badge claim">New Claim</span>
+                <% end %>
+              </div>
+              <div class="notification-time">
+                <span class="time-icon">⏱️</span>
+                <%= time_ago_in_words(notification.created_at) %> ago
+              </div>
+            </div>
+
+            <div class="notification-message">
+              <p class="message-text">
+                <% if notification.comment? %>
+                  <strong><%= notification.sender&.name || 'Someone' %></strong> commented on your item
+                <% elsif notification.verified? %>
+                  Your item has been verified by the admin
+                <% elsif notification.claim? %>
+                  <strong><%= notification.sender&.name || 'Someone' %></strong> submitted a claim for your item
+                <% end %>
+              </p>
+            </div>
+
+            <div class="notification-item">
+              <span class="item-icon">📦</span>
+              <strong><%= notification.item.title %></strong>
+            </div>
+
+            <% if notification.sender.present? %>
+              <div class="notification-sender">
+                <span class="sender-icon">👤</span>
+                From: <strong><%= notification.sender.try(:name) || notification.sender.try(:email) %></strong>
+                <span class="sender-type">(<%= notification.sender_type %>)</span>
+              </div>
+            <% end %>
+
+            <div class="notification-actions">
+              <% unless notification.is_read %>
+                <%= button_to "Mark as read", 
+                      mark_as_read_notification_path(notification), 
+                      method: :patch,
+                      class: "btn btn-primary btn-small" %>
+              <% else %>
+                <span class="read-badge">
+                  <span class="read-icon">✓</span> Read
+                </span>
+              <% end %>
+              
+              <%= link_to "View Item", item_path(notification.item), class: "btn btn-outline btn-small" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <!-- Empty State -->
+    <div class="empty-state">
+      <div class="empty-icon">🔕</div>
+      <h3>No Notifications</h3>
+      <p>You're all caught up! No new notifications at the moment.</p>
+      <p>When someone comments on your items or submits claims, you'll see them here.</p>
+      <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-primary mt-3" %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  /* Notifications Page Styles */
+  .notifications-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Page Header */
+  .page-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: white;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-icon {
+    font-size: 48px;
+  }
+
+  .header-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .header-text p {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 16px;
+  }
+
+  .stat-badge {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 20px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    text-align: center;
+    min-width: 80px;
+  }
+
+  .stat-badge.unread {
+    background: rgba(239, 68, 68, 0.3);
+  }
+
+  .stat-number {
+    font-size: 24px;
+    font-weight: 800;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  /* Mark All Button */
+  .mark-all-container {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+
+  /* Notifications List */
+  .notifications-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Notification Card */
+  .notification-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    gap: 16px;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .notification-card.unread {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+    border-left: 4px solid #3b82f6;
+  }
+
+  .notification-card:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Notification Icon */
+  .notification-icon {
+    font-size: 32px;
+    min-width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border-radius: 12px;
+  }
+
+  .notification-card.unread .notification-icon {
+    background: #dbeafe;
+  }
+
+  /* Notification Content */
+  .notification-content {
+    flex: 1;
+  }
+
+  .notification-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .notification-type {
+    display: flex;
+    gap: 8px;
+  }
+
+  .type-badge {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .type-badge.comment {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  .type-badge.verified {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  .type-badge.claim {
+    background: #fed7aa;
+    color: #9a3412;
+  }
+
+  .notification-time {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .time-icon {
+    font-size: 12px;
+  }
+
+  .notification-message {
+    margin-bottom: 12px;
+  }
+
+  .message-text {
+    font-size: 15px;
+    color: #1e293b;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .notification-item {
+    background: #f8fafc;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .item-icon {
+    font-size: 14px;
+  }
+
+  .notification-sender {
+    background: #fefce8;
+    padding: 8px 12px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    flex-wrap: wrap;
+  }
+
+  .sender-icon {
+    font-size: 14px;
+  }
+
+  .sender-type {
+    color: #64748b;
+    font-size: 11px;
+  }
+
+  .notification-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-small {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+  }
+
+  .btn-outline:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  .read-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: #f1f5f9;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+  }
+
+  .read-icon {
+    font-size: 12px;
+    color: #10b981;
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .empty-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+  }
+
+  .empty-state h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+  }
+
+  .empty-state p {
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .mt-3 {
+    margin-top: 16px;
+  }
+
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .notification-card {
+    animation: slideIn 0.3s ease-out;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .notifications-container {
+      padding: 16px;
+    }
+
+    .page-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .header-content {
+      flex-direction: column;
+    }
+
+    .notification-card {
+      flex-direction: column;
+    }
+
+    .notification-icon {
+      align-self: flex-start;
+    }
+
+    .notification-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .notification-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .notification-actions .btn,
+    .notification-actions .read-badge {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+</style>

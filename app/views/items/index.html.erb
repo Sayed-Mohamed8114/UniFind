@@ -1,0 +1,589 @@
+<div class="items-index-container">
+  
+  <!-- Page Header -->
+  <div class="page-header" data-aos="fade-down">
+    <div class="header-content">
+      <div class="header-icon">🔍</div>
+      <div class="header-text">
+        <h1>Browse Items</h1>
+        <p>Search through verified lost and found items on campus</p>
+      </div>
+    </div>
+    <div class="header-stats">
+      <span class="stat-badge">
+        <span class="stat-number"><%= @items.count %></span>
+        <span class="stat-label">Available Items</span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Search and Filter Bar -->
+  <div class="search-filter-section" data-aos="fade-up">
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search by title, description" class="search-input">
+      <button onclick="searchItems()" class="search-button">
+        <span>🔍</span> Search
+      </button>
+    </div>
+    
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterByStatus('all')">All Items</button>
+      <button class="filter-tab" onclick="filterByStatus('lost')">Lost Items</button>
+      <button class="filter-tab" onclick="filterByStatus('found')">Found Items</button>
+    </div>
+  </div>
+
+  <% if @items.any? %>
+    <!-- Items Grid -->
+    <div class="items-grid" id="itemsGrid">
+      <% @items.each do |item| %>
+        <div class="item-card" data-status="<%= item.status %>" data-title="<%= item.title.downcase %>" data-description="<%= item.description.downcase %>" data-aos="fade-up" >
+          
+          <!-- Status Badge -->
+          <div class="item-badge <%= item.status %>">
+            <%= item.status.upcase %>
+          </div>
+
+          <!-- Item Image -->
+          <% if item.image_path.present? %>
+            <div class="item-image">
+              <img src="<%= item.image_path %>" alt="<%= item.title %>">
+            </div>
+          <% else %>
+            <div class="item-image-placeholder">
+              <span class="placeholder-icon">
+                <%= item.status == 'lost' ? '🔍' : '📦' %>
+              </span>
+            </div>
+          <% end %>
+
+          <!-- Item Content -->
+          <div class="item-content">
+            <h3 class="item-title"><%= item.title %></h3>
+            <p class="item-description"><%= truncate(item.description, length: 120) %></p>
+            
+            <!-- Item Meta Info -->
+            <div class="item-meta">
+              <div class="meta-item">
+                <span class="meta-icon">📍</span>
+                <span>Posted by: <%= item.user.name %></span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-icon">📅</span>
+                <span><%= time_ago_in_words(item.created_at) %> ago</span>
+              </div>
+            </div>
+
+            <!-- Verification Badge -->
+            <% if item.is_verified %>
+              <div class="verified-badge">
+                <span class="verified-icon">✓</span> Verified
+              </div>
+            <% end %>
+
+            <!-- Action Buttons -->
+            <div class="item-actions">
+              <%= link_to "View Details", item_path(item), class: "btn btn-primary btn-small" %>
+              
+              <% if user_signed_in? && item.user != current_user && !item.is_resolved %>
+                <%= link_to "Claim This Item", new_item_claim_path(item), class: "btn btn-outline btn-small" %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Pagination (if using will_paginate or kaminari) -->
+    <% if @items.respond_to?(:total_pages) && @items.total_pages > 1 %>
+      <div class="pagination-container">
+        <%= paginate @items %>
+      </div>
+    <% end %>
+    
+  <% else %>
+    <!-- Empty State -->
+    <div class="empty-state" data-aos="fade-up">
+      <div class="empty-icon">📭</div>
+      <h3>No Items Found</h3>
+      <p>There are currently no verified lost or found items available.</p>
+      <p>Check back later or report an item to help the community!</p>
+      <% if user_signed_in? %>
+        <%= link_to "Report an Item", new_item_path, class: "btn btn-primary mt-3" %>
+      <% else %>
+        <%= link_to "Sign in to Report", new_user_session_path, class: "btn btn-primary mt-3" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<style>
+  /* Items Index Styles */
+  .items-index-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Page Header */
+  .page-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    border-radius: 20px;
+    padding: 32px;
+    margin-bottom: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    color: white;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-icon {
+    font-size: 48px;
+  }
+
+  .header-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .header-text p {
+    font-size: 14px;
+    opacity: 0.9;
+  }
+
+  .header-stats {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 24px;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+  }
+
+  .stat-badge {
+    text-align: center;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    opacity: 0.9;
+  }
+
+  /* Search and Filter Section */
+  .search-filter-section {
+    margin-bottom: 32px;
+  }
+
+  .search-bar {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 8px;
+    border-radius: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+  }
+
+  .search-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .search-button {
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .search-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-tab {
+    padding: 8px 20px;
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    color: #64748b;
+  }
+
+  .filter-tab.active {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+    border-color: transparent;
+  }
+
+  .filter-tab:hover:not(.active) {
+    border-color: #3b82f6;
+    color: #3b82f6;
+  }
+
+  /* Items Grid */
+  .items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 24px;
+  }
+
+  /* Item Card */
+  .item-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    position: relative;
+  }
+
+  .item-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+  }
+
+  .item-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .item-badge.lost {
+    background: #ef4444;
+    color: white;
+  }
+
+  .item-badge.found {
+    background: #10b981;
+    color: white;
+  }
+
+  /* Item Image */
+  .item-image {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background: #f8fafc;
+  }
+
+  .item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .item-card:hover .item-image img {
+    transform: scale(1.05);
+  }
+
+  .item-image-placeholder {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon {
+    font-size: 64px;
+  }
+
+  /* Item Content */
+  .item-content {
+    padding: 20px;
+  }
+
+  .item-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+
+  .item-description {
+    font-size: 14px;
+    color: #64748b;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .item-meta {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .meta-icon {
+    font-size: 12px;
+  }
+
+  .verified-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #d1fae5;
+    color: #065f46;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .verified-icon {
+    font-size: 10px;
+  }
+
+  .item-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-small {
+    padding: 6px 14px;
+    font-size: 12px;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: #3b82f6;
+    border: 2px solid #3b82f6;
+  }
+
+  .btn-outline:hover {
+    background: #3b82f6;
+    color: white;
+    transform: translateY(-1px);
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 80px 20px;
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .empty-icon {
+    font-size: 80px;
+    margin-bottom: 24px;
+  }
+
+  .empty-state h3 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+  }
+
+  .empty-state p {
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+
+  .mt-3 {
+    margin-top: 16px;
+  }
+
+  /* Pagination */
+  .pagination-container {
+    margin-top: 40px;
+    text-align: center;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .item-card {
+    animation: fadeInUp 0.4s ease-out;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .items-index-container {
+      padding: 16px;
+    }
+
+    .page-header {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .header-content {
+      flex-direction: column;
+    }
+
+    .search-bar {
+      flex-direction: column;
+    }
+
+    .search-button {
+      justify-content: center;
+    }
+
+    .filter-tabs {
+      justify-content: center;
+    }
+
+    .items-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .item-actions {
+      flex-direction: column;
+    }
+
+    .item-actions .btn {
+      width: 100%;
+      text-align: center;
+      justify-content: center;
+    }
+  }
+</style>
+
+<script>
+  // Search functionality
+  function searchItems() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const items = document.querySelectorAll('.item-card');
+    
+    items.forEach(item => {
+      const title = item.getAttribute('data-title') || '';
+      const description = item.getAttribute('data-description') || '';
+      
+      if (title.includes(searchTerm) || description.includes(searchTerm)) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Filter by status
+  function filterByStatus(status) {
+    const items = document.querySelectorAll('.item-card');
+    const tabs = document.querySelectorAll('.filter-tab');
+    
+    // Update active tab
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    // Filter items
+    items.forEach(item => {
+      if (status === 'all') {
+        item.style.display = 'block';
+      } else if (item.getAttribute('data-status') === status) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // Real-time search (optional)
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('keyup', function(e) {
+        searchItems();
+      });
+    }
+  });
+</script>

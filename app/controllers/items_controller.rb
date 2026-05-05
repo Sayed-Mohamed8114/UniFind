@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   
 
   def index
-    @items = Item.all
+    @items = Item.where(:is_verified => true).and(Item.where(:is_resolved => false))
   end
 
 

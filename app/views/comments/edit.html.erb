@@ -1,14 +1,434 @@
-<h2>Edit Comment</h2>
+<div class="edit-comment-container">
+  
+  <!-- Back Button -->
+  <div class="back-button">
+    <%= link_to item_path(@item), class: "back-link" do %>
+      <span>←</span> Back to Item
+    <% end %>
+  </div>
 
-<%= form_with model: [@item, @comment], local: true do |f| %>
-  <p>
-    <%= f.label :content %><br>
-    <%= f.text_area :content %>
-  </p>
+  <!-- Edit Comment Card -->
+  <div class="edit-comment-card" data-aos="fade-up">
+    
+    <!-- Header -->
+    <div class="card-header">
+      <div class="header-icon">✏️</div>
+      <div class="header-text">
+        <h1>Edit Comment</h1>
+        <p>Update your comment on "<%= @item.title %>"</p>
+      </div>
+    </div>
 
-  <%= f.submit "Update Comment" %>
-<% end %>
+    <!-- Item Preview -->
+    <div class="item-preview">
+      <div class="preview-label">Commenting on:</div>
+      <div class="preview-item">
+        <span class="item-icon">📦</span>
+        <span class="item-title"><%= @item.title %></span>
+        <span class="item-status <%= @item.status %>"><%= @item.status.upcase %></span>
+      </div>
+    </div>
 
-<br>
+    <!-- Edit Form -->
+    <%= form_with model: [@item, @comment], local: true, html: { class: "edit-comment-form" } do |f| %>
+      
+      <div class="form-group">
+        <%= f.label :content, class: "form-label" do %>
+          <span class="label-icon">💬</span>
+          Comment Content
+        <% end %>
+        <%= f.text_area :content, 
+              class: "form-textarea", 
+              rows: 6, 
+              placeholder: "Edit your comment...",
+              required: true,
+              autofocus: true %>
+        <div class="form-hint">
+          <span class="hint-icon">ℹ️</span>
+          Be respectful and helpful to others
+        </div>
+      </div>
 
-<%= link_to "Back", item_path(@item) %>
+      <div class="form-actions">
+        <%= f.submit "Update Comment", class: "btn btn-primary" %>
+        <%= link_to "Cancel", item_path(@item), class: "btn btn-secondary" %>
+      </div>
+    <% end %>
+
+    <!-- Delete Option -->
+    <div class="delete-section">
+      <div class="delete-warning">
+        <span class="warning-icon">⚠️</span>
+        <div class="warning-text">
+          <strong>Need to remove this comment?</strong>
+          <p>You can delete it permanently from the item page.</p>
+        </div>
+        <%= button_to "Delete Comment", 
+              item_comment_path(@item, @comment), 
+              method: :delete,
+              data: { confirm: "Are you sure you want to delete this comment? This action cannot be undone." },
+              class: "btn btn-danger-small" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Edit Comment Styles */
+  .edit-comment-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 24px;
+  }
+
+  /* Back Button */
+  .back-button {
+    margin-bottom: 24px;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  .back-link:hover {
+    transform: translateX(-4px);
+    color: #2563eb;
+  }
+
+  /* Edit Comment Card */
+  .edit-comment-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Card Header */
+  .card-header {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: white;
+  }
+
+  .header-icon {
+    font-size: 48px;
+  }
+
+  .header-text h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .header-text p {
+    font-size: 14px;
+    opacity: 0.9;
+    margin: 0;
+  }
+
+  /* Item Preview */
+  .item-preview {
+    padding: 20px 32px;
+    background: #f8fafc;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .preview-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .preview-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .item-icon {
+    font-size: 20px;
+  }
+
+  .item-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  .item-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .item-status.lost {
+    background: #fee2e2;
+    color: #dc2626;
+  }
+
+  .item-status.found {
+    background: #d1fae5;
+    color: #059669;
+  }
+
+  /* Form Styles */
+  .edit-comment-form {
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .label-icon {
+    font-size: 16px;
+  }
+
+  .form-textarea {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    font-family: inherit;
+    resize: vertical;
+    transition: all 0.3s ease;
+  }
+
+  .form-textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+
+  .form-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  .hint-icon {
+    font-size: 12px;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 16px;
+    padding-top: 8px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+  }
+
+  .btn-secondary {
+    background: #64748b;
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background: #475569;
+    transform: translateY(-2px);
+  }
+
+  .btn-danger-small {
+    background: #ef4444;
+    color: white;
+    padding: 8px 20px;
+    font-size: 13px;
+  }
+
+  .btn-danger-small:hover {
+    background: #dc2626;
+    transform: translateY(-2px);
+  }
+
+  /* Delete Section */
+  .delete-section {
+    padding: 24px 32px 32px;
+    border-top: 1px solid #e2e8f0;
+    background: #fefce8;
+  }
+
+  .delete-warning {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    background: #fef3c7;
+    padding: 16px;
+    border-radius: 12px;
+    border-left: 4px solid #f59e0b;
+  }
+
+  .warning-icon {
+    font-size: 24px;
+  }
+
+  .warning-text {
+    flex: 1;
+  }
+
+  .warning-text strong {
+    display: block;
+    color: #92400e;
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
+
+  .warning-text p {
+    color: #b45309;
+    font-size: 12px;
+    margin: 0;
+  }
+
+  /* Animations */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .edit-comment-card {
+    animation: slideIn 0.4s ease-out;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 640px) {
+    .edit-comment-container {
+      padding: 16px;
+    }
+
+    .card-header {
+      flex-direction: column;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .header-icon {
+      font-size: 36px;
+    }
+
+    .header-text h1 {
+      font-size: 24px;
+    }
+
+    .item-preview {
+      padding: 16px 20px;
+    }
+
+    .preview-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .edit-comment-form {
+      padding: 24px;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .form-actions .btn {
+      width: 100%;
+    }
+
+    .delete-section {
+      padding: 20px;
+    }
+
+    .delete-warning {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+
+<!-- Optional: Add character counter JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.querySelector('.form-textarea');
+    if (textarea) {
+      // Add character counter
+      const counterDiv = document.createElement('div');
+      counterDiv.className = 'character-counter';
+      counterDiv.style.cssText = 'text-align: right; font-size: 12px; color: #64748b; margin-top: 4px;';
+      textarea.parentNode.appendChild(counterDiv);
+      
+      function updateCounter() {
+        const length = textarea.value.length;
+        counterDiv.textContent = `${length} characters`;
+        if (length > 500) {
+          counterDiv.style.color = '#ef4444';
+        } else if (length > 400) {
+          counterDiv.style.color = '#f59e0b';
+        } else {
+          counterDiv.style.color = '#64748b';
+        }
+      }
+      
+      textarea.addEventListener('input', updateCounter);
+      updateCounter();
+    }
+  });
+</script>
