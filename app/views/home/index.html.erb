@@ -1,2 +1,561 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<!-- Home Page for UniFind - Lost & Found Platform -->
+<div class="home-page">
+  
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <div class="hero-grid">
+        <div class="hero-content" data-aos="fade-right">
+          <div class="hero-badge">
+            <span class="badge-icon">🎓</span>
+            <span>University Lost & Found</span>
+          </div>
+          <h1 class="hero-title">
+            Lost Something? 
+            <span class="gradient-text">We'll Help You Find It</span>
+          </h1>
+          <p class="hero-description">
+            UniFind is the official lost and found platform for university students. 
+            Report lost items, discover found belongings, and reconnect with what matters most.
+          </p>
+          <div class="hero-buttons">
+            <% if user_signed_in? %>
+              <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-primary btn-large" %>
+              <%= link_to "Report Lost Item", new_lost_item_path, class: "btn btn-outline btn-large" %>
+            <% else %>
+              <%= link_to "Get Started", new_user_registration_path, class: "btn btn-primary btn-large" %>
+              <%= link_to "Learn More", "#how-it-works", class: "btn btn-outline btn-large" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="hero-image" data-aos="fade-left">
+          <%= image_tag "hero.png", alt: "Lost and Found Illustration", class: "hero-img", onerror: "this.src='https://placehold.co/600x500/3b82f6/white?text=UniFind'" %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section id="how-it-works" class="how-it-works-section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">How <span class="gradient-text">UniFind</span> Works</h2>
+        <p class="section-subtitle">Simple steps to report or find lost items on campus</p>
+      </div>
+      <div class="steps-grid">
+        <div class="step-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="step-number">1</div>
+          <div class="step-icon">📝</div>
+          <h3 class="step-title">Report Item</h3>
+          <p class="step-description">Fill out a simple form with details about what you lost or found</p>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="step-number">2</div>
+        <div class="step-icon">🔍</div>
+        <h3 class="step-title">Search Items</h3>
+        <p class="step-description">Browse through all reported lost and found items on our website to find what you're looking for</p>
+        </div>
+        <div class="step-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="step-number">3</div>
+          <div class="step-icon">🤝</div>
+          <h3 class="step-title">Reconnect</h3>
+          <p class="step-description">Connect with the finder or owner and get your item back</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">Why Choose <span class="gradient-text">UniFind</span>?</h2>
+        <p class="section-subtitle">Making lost and found easier for everyone on campus</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Fast & Easy</h3>
+          <p class="feature-description">Report lost or found items in under 2 minutes</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+          <div class="feature-icon">🌍</div>
+          <h3 class="feature-title">Campus Wide</h3>
+          <p class="feature-description">Used by thousands of students across all departments</p>
+        </div>
+        <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+          <div class="feature-icon">💬</div>
+          <h3 class="feature-title">Direct Contact</h3>
+          <p class="feature-description">Connect directly with finders or owners instantly</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <div class="cta-content" data-aos="zoom-in">
+        <h2 class="cta-title">Ready to Reconnect with Your Belongings?</h2>
+        <p class="cta-description">Join thousands of students already using UniFind</p>
+        <% if user_signed_in? %>
+          <%= link_to "Go to Dashboard", dashboard_path, class: "btn btn-primary btn-large" %>
+        <% else %>
+          <%= link_to "Create Free Account", new_user_registration_path, class: "btn btn-primary btn-large" %>
+          <p class="cta-note">Already have an account? <%= link_to "Sign in", new_user_session_path, class: "link" %></p>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- CSS for Home Page -->
+<style>
+  /* Home Page Specific Styles */
+  .home-page {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  /* Hero Section */
+  .hero-section {
+    padding: 80px 0 60px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section::before {
+    content: "🔍";
+    position: absolute;
+    font-size: 400px;
+    opacity: 0.03;
+    bottom: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(59, 130, 246, 0.1);
+    padding: 8px 16px;
+    border-radius: 100px;
+    margin-bottom: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2563eb;
+  }
+
+  .hero-title {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 24px;
+    color: #1e293b;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-description {
+    font-size: 18px;
+    color: #475569;
+    margin-bottom: 32px;
+    line-height: 1.6;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 48px;
+    padding-top: 24px;
+    border-top: 2px solid rgba(59, 130, 246, 0.1);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: #3b82f6;
+  }
+
+  .stat-label {
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  .hero-image {
+    position: relative;
+  }
+
+  .hero-img {
+    width: 100%;
+    max-width: 500px;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* Section Styles */
+  .section-header {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+
+  .section-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+
+  .section-subtitle {
+    font-size: 18px;
+    color: #64748b;
+  }
+
+  /* How It Works */
+  .how-it-works-section {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+  }
+
+  .step-card {
+    text-align: center;
+    padding: 32px 24px;
+    background: white;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+  }
+
+  .step-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+    border-color: #3b82f6;
+  }
+
+  .step-number {
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+  }
+
+  .step-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .step-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1e293b;
+  }
+
+  .step-description {
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Recent Items */
+  .recent-items-section {
+    padding: 80px 0;
+    background: #f8fafc;
+  }
+
+  .category-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+
+  .tab-btn {
+    padding: 10px 24px;
+    border: none;
+    background: white;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+  }
+
+  .tab-btn.active,
+  .tab-btn:hover {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    border-color: transparent;
+  }
+
+  /* Features Section */
+  .features-section {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+  }
+
+  .feature-card {
+    text-align: center;
+    padding: 32px 24px;
+    background: #f8fafc;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    background: white;
+    box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.1);
+  }
+
+  .feature-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .feature-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #1e293b;
+  }
+
+  .feature-description {
+    color: #64748b;
+    line-height: 1.6;
+  }
+
+  /* Testimonials */
+  .testimonials-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+    color: white;
+  }
+
+  .testimonials-section .section-title,
+  .testimonials-section .section-subtitle {
+    color: white;
+  }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+  }
+
+  .testimonial-card {
+    background: white;
+    padding: 32px;
+    border-radius: 20px;
+    color: #1e293b;
+    position: relative;
+  }
+
+  .quote-icon {
+    font-size: 48px;
+    color: #3b82f6;
+    opacity: 0.3;
+    position: absolute;
+    top: 16px;
+    left: 24px;
+  }
+
+  .testimonial-text {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .author-avatar {
+    width: 48px;
+    height: 48px;
+    background: #e0f2fe;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+  }
+
+  .author-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .author-title {
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  /* CTA Section */
+  .cta-section {
+    padding: 80px 0;
+    background: white;
+  }
+
+  .cta-content {
+    text-align: center;
+    padding: 60px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 32px;
+  }
+
+  .cta-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+
+  .cta-description {
+    font-size: 18px;
+    color: #475569;
+    margin-bottom: 32px;
+  }
+
+  .cta-note {
+    margin-top: 16px;
+    font-size: 14px;
+    color: #64748b;
+  }
+
+  .cta-note .link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  .cta-note .link:hover {
+    text-decoration: underline;
+  }
+
+  /* Item Card Placeholder */
+  .item-image-placeholder {
+    width: 100%;
+    height: 160px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-icon {
+    font-size: 64px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    
+    .hero-title {
+      font-size: 32px;
+    }
+    
+    .hero-buttons {
+      justify-content: center;
+    }
+    
+    .hero-stats {
+      justify-content: center;
+    }
+    
+    .section-title {
+      font-size: 28px;
+    }
+    
+    .cta-content {
+      padding: 32px 24px;
+    }
+    
+    .cta-title {
+      font-size: 28px;
+    }
+  }
+</style>
+
+<!-- JavaScript for Filtering -->
+<script>
+  function filterItems(type) {
+    const items = document.querySelectorAll('.item-card');
+    const tabs = document.querySelectorAll('.tab-btn');
+    
+    tabs.forEach(tab => tab.classList.remove('active'));
+    event.target.classList.add('active');
+    
+    items.forEach(item => {
+      if (type === 'all') {
+        item.style.display = 'block';
+      } else if (item.getAttribute('data-type') === type) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+</script>

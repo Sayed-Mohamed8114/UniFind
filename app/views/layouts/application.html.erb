@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Backend</title>
+    <title>UniFind - Reconnect with your belongings</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="description" content="Lost something? Found something? Let us help you reconnect with your belongings.">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -11,13 +12,59 @@
   </head>
 
   <body>
-  <% if user_signed_in? %>
-    Logged in as <%= current_user.email %>
-    <%= button_to "Logout", destroy_user_session_path, method: :delete %>
-  <% else %>
-    <%= link_to "Login", new_user_session_path %>
-    <%= link_to "Sign up", new_user_registration_path %>
-  <% end %>
-    <%= yield %>
+    <!-- Flash Messages -->
+    <% if notice || alert %>
+      <div class="flash-messages">
+        <% if notice %>
+          <div class="alert alert-notice"><%= notice %></div>
+        <% end %>
+        <% if alert %>
+          <div class="alert alert-alert"><%= alert %></div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="navbar-container">
+        <%= link_to "UniFind", root_path, class: "navbar-brand" %>
+        
+        <div class="navbar-user">
+          <% if user_signed_in? %>
+            <span class="user-email"><%= current_user.email %></span>
+            <%= link_to "Report Lost Item", new_lost_item_path, class: "btn btn-primary btn-small" if defined?(lost_items_path) %>
+            <%= link_to "Report Found Item", new_found_item_path, class: "btn btn-secondary btn-small" if defined?(found_items_path) %>
+            <%= button_to "Logout", destroy_user_session_path, method: :delete, 
+                class: "btn-logout", form: { style: 'display: inline-block;' } %>
+          <% else %>
+            <%= link_to "Login", new_user_session_path, class: "btn btn-outline" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <% if content_for?(:hero) %>
+          <%= yield(:hero) %>
+        <% else %>
+          <div class="hero">
+            <h1>UniFind</h1>
+            <p>Lost something? Found something? We're here to help you reconnect with your belongings.</p>
+          </div>
+        <% end %>
+        
+        <%= yield %>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>&copy; <%= Time.current.year %> UniFind. Helping people reconnect with what matters most.</p>
+      </div>
+    </footer>
   </body>
 </html>
