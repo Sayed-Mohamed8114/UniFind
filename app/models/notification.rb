@@ -5,6 +5,7 @@ class Notification < ApplicationRecord
 
   enum notification_type: {
     comment: "comment",
-    verified: "verified"
+    verified: "verified",
+    claim: "claim" 
   }
 end

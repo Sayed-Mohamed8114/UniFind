@@ -12,6 +12,14 @@ class ClaimsController < ApplicationController
     @claim.item = @item
 
     if @claim.save
+      # 🔔 Create notification for item owner
+      Notification.create(
+        user: @item.user,          # receiver (item owner)
+        sender: current_user,      # who made the claim
+        item: @item,
+        notification_type: :claim
+      )
+
       redirect_to dashboard_path, notice: "Claim submitted successfully"
     else
       render :new

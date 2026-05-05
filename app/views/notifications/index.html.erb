@@ -4,21 +4,31 @@
   <div style="border:1px solid #ccc; margin-bottom:10px; padding:10px;
               background-color: <%= notification.is_read ? '#f5f5f5' : '#e6f7ff' %>">
 
-    <p>
-      <% if notification.notification_type == "comment" %>
-        💬 New comment on your item:
-      <% elsif notification.notification_type == "verified" %>
-        ✔ Your item has been verified:
-      <% end %>
-    </p>
+  <p>
+    <% if notification.comment? %>
+      💬 New comment on your item:
+    <% elsif notification.verified? %>
+      ✔ Your item has been verified:
+    <% elsif notification.claim? %>
+      📩 New claim submitted for your item:
+    <% end %>
+  </p>
 
     <p>
       <strong><%= notification.item.title %></strong>
     </p>
 
-    <p>
-      From: <%= notification.sender_type %>
-    </p>
+  <p>
+    From:
+    <% if notification.sender.present? %>
+      <strong>
+        <%= notification.sender.try(:email) || notification.sender.try(:name) || notification.sender_type %>
+      </strong>
+      (<%= notification.sender_type %>)
+    <% else %>
+      Unknown
+    <% end %>
+  </p>
 
     <small>
       <%= time_ago_in_words(notification.created_at) %> ago
