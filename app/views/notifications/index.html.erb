@@ -99,6 +99,11 @@
               <% end %>
               
               <%= link_to "View Item", item_path(notification.item), class: "btn btn-outline btn-small" %>
+
+              <%# if the notification is claim display button link_to my_items_claims_claims_path %>
+              <% if notification.claim? %>
+                <%= link_to "View Claims", my_items_claims_claims_path(notification.item), class: "btn btn-outline btn-small" %>
+              <% end %>
             </div>
           </div>
         </div>
