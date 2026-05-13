@@ -9,19 +9,6 @@ class Comment < ApplicationRecord
     %w[user item]
   end
   validates :content, presence: true
-  after_create :notify_item_owner
 
-  private
 
-  def notify_item_owner
-    return if item.user == user
-
-    Notification.create!(
-      user: item.user,
-      sender: user,
-      item: item,
-      notification_type: :comment,
-      is_read: false
-    )
-  end
 end

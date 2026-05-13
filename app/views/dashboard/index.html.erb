@@ -32,7 +32,7 @@
     <div class="stat-card" data-aos="fade-up" data-aos-delay="400">
       <div class="stat-icon">⏳</div>
       <div class="stat-info">
-        <span class="stat-number"><%= @items.where(is_resolved: false).count %></span>
+        <span class="stat-number"><%= @items.where(is_resolved: false).where(is_verified: true).count %></span>
         <span class="stat-label">Active Items</span>
       </div>
     </div>

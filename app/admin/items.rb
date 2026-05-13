@@ -1,5 +1,5 @@
 ActiveAdmin.register Item do
-  permit_params :title, :description, :status, :user_id, :image_path, :is_resolved
+  permit_params :title, :description, :status, :user_id, :image_path, :is_resolved, :is_verified
 
   index do
     selectable_column
