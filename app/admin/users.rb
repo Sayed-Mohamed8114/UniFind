@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :email, :name, :academic_id, :blocked
+  permit_params :email, :name, :academic_id, :blocked, :password, :password_confirmation
 
   filter :email
   filter :name
@@ -24,6 +24,8 @@ ActiveAdmin.register User do
       f.input :name
       f.input :academic_id
       f.input :blocked, as: :boolean
+      f.input :password
+      f.input :password_confirmation
     end
     f.actions
   end
